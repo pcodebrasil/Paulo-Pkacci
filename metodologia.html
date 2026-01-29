@@ -2,29 +2,50 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Metodologia | Systems Solutions Architect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodologia | Versão X.2</title>
     <style>
-        :root { --primary: #00d4ff; --bg: #000; --card: #0a0a0a; }
-        body { background: var(--bg); color: #ccc; font-family: sans-serif; padding: 40px; }
-        .card { background: var(--card); border: 1px solid #222; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
-        h1, h3 { color: var(--primary); }
+        :root { --primary: #00f2fe; --bg: #050505; --card-bg: #111; }
+        body { background: var(--bg); color: #fff; font-family: sans-serif; padding: 20px; }
+        .header { max-width: 800px; margin: 40px auto; text-align: left; }
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #222;
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 5px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), #4facfe);
+        }
+        h1 { color: var(--primary); font-size: 2.5rem; }
+        h3 { font-size: 1.5rem; margin-top: 0; color: #fff; }
+        p { color: #aaa; line-height: 1.6; }
+        .back { color: var(--primary); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <a href="index.html" style="color:var(--primary); text-decoration:none;">← Voltar</a>
-    <h1>MÉTODO PKACCI (V. X.1)</h1>
-    <div class="card">
-        <h3>01. Infraestrutura Cloud Resiliente</h3>
-        <p>Arquitetura baseada em clusters globais com redundância de DNS (4 IPs ativos).</p>
+    <div class="header">
+        <a href="index.html" class="back">← VOLTAR</a>
+        <h1>MÉTODO PKACCI (V. X.2)</h1>
     </div>
     <div class="card">
-        <h3>02. Engenharia de Software Auditada</h3>
-        <p>Desenvolvimento modular validado por inteligência artificial para máxima qualidade de código.</p>
+        <h3>01. Infraestrutura Cloud</h3>
+        <p>Clusters globais redundantes e alta disponibilidade para sistemas críticos.</p>
     </div>
     <div class="card">
-        <h3>03. Segurança & Ecossistema</h3>
-        <p>Integração segura com Firebase e HTTPS forçado em todas as camadas.</p>
+        <h3>02. Engenharia Auditada</h3>
+        <p>Desenvolvimento assistido por IA e revisões modulares para segurança total.</p>
     </div>
-    <footer style="text-align:center; font-size:0.7rem; margin-top:40px;">Developed by: Paulo Pkacci by 2026</footer>
+    <div class="card">
+        <h3>03. Ecossistema Seguro</h3>
+        <p>Criptografia de ponta e integrações robustas para proteção de dados.</p>
+    </div>
 </body>
 </html>

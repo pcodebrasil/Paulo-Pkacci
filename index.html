@@ -5,72 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paulo Pkacci | Systems Solutions Architect</title>
     <style>
-        :root {
-            --primary: #00f2fe; /* Cyan Vivo */
-            --secondary: #4facfe; /* Azul Royal */
-            --bg: #050505;
-            --text: #ffffff;
+        :root { --primary: #00f2fe; --secondary: #4facfe; --bg: #050505; }
+        body { background: radial-gradient(circle at top, #111, var(--bg)); color: #fff; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
+        
+        @keyframes revealName {
+            0% { opacity: 0; letter-spacing: 15px; filter: blur(10px); }
+            100% { opacity: 1; letter-spacing: -1px; filter: blur(0); }
         }
-        body {
-            background: radial-gradient(circle at top, #111, var(--bg));
-            color: var(--text);
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+        
+        .container { text-align: center; animation: revealName 1.2s ease-out forwards; }
+        h1 { font-size: clamp(2.5rem, 8vw, 4rem); background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+        .role { font-size: 1.2rem; color: #888; margin: 10px 0 40px; letter-spacing: 2px; text-transform: uppercase; }
+        
+        /* Estilo do botão unificado */
+        .btn-vivid { 
+            display: inline-block; padding: 18px 40px; 
+            background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+            color: #000; text-decoration: none; font-weight: bold; 
+            border-radius: 50px; transition: 0.3s; 
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3); 
+            cursor: pointer;
         }
-        .container {
-            text-align: center;
-            padding: 20px;
-            max-width: 600px;
-            width: 90%;
-        }
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-        p.role {
-            font-size: 1.2rem;
-            color: #888;
-            margin: 10px 0 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .btn-vivid {
-            display: inline-block;
-            padding: 18px 40px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: #000;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3);
-            transition: 0.3s transform;
-        }
-        .btn-vivid:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            position: absolute;
-            bottom: 20px;
-            font-size: 0.8rem;
-            color: #444;
-        }
+        .btn-vivid:hover { transform: scale(1.05); filter: brightness(1.1); }
+        footer { position: absolute; bottom: 20px; font-size: 0.7rem; color: #333; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>PAULO PKACCI</h1>
         <p class="role">Systems Solutions Architect</p>
-        <a href="metodologia.html" class="btn-vivid">EXPLORAR METODOLOGIA</a>
+        
+        <a href="metodologia.html" class="btn-vivid">VER METODOLOGIA</a>
     </div>
-    <footer>Developed by: Paulo Pkacci by 2026 | Versão X.2</footer>
+    <footer>Developed by: Paulo Pkacci by 2026 | Versão X.4.1</footer>
 </body>
 </html>

@@ -2,65 +2,29 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metodologia Avançada | Paulo Pkacci</title>
+    <title>Metodologia | Systems Solutions Architect</title>
     <style>
-        :root { --primary: #00d4ff; --bg: #000000; --card: #0a0a0a; --text: #ffffff; --subtext: #a0a0a0; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; margin: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        
-        .header { border-left: 4px solid var(--primary); padding-left: 20px; margin-bottom: 60px; }
-        .back-link { color: var(--primary); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        h1 { font-size: 2.5rem; margin: 10px 0; letter-spacing: 2px; }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .method-card { background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #1a1a1a; transition: 0.3s; }
-        .method-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .method-card h3 { color: var(--primary); margin-top: 0; font-size: 1.3rem; text-transform: uppercase; }
-        .method-card p { color: var(--subtext); font-size: 0.95rem; }
-
-        .highlight { grid-column: 1 / -1; background: linear-gradient(45deg, #0a0a0a, #111); border: 1px solid var(--primary); }
-
-        footer { text-align: center; margin-top: 80px; color: #333; font-size: 0.8rem; }
-        
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        :root { --primary: #00d4ff; --bg: #000; --card: #0a0a0a; }
+        body { background: var(--bg); color: #ccc; font-family: sans-serif; padding: 40px; }
+        .card { background: var(--card); border: 1px solid #222; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        h1, h3 { color: var(--primary); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="index.html" class="back-link">← Voltar para Vitrine</a>
-            <h1>MÉTODO PKACCI</h1>
-            <p style="color: var(--subtext);">Engenharia de Sistemas e Arquitetura de Soluções de Alta Disponibilidade.</p>
-        </div>
-
-        <div class="grid">
-            <div class="method-card">
-                <h3>01. Arquitetura Cloud</h3>
-                <p>Estruturação de sistemas em clusters globais com redundância de DNS, garantindo que sua aplicação nunca fique offline.</p>
-            </div>
-            <div class="method-card">
-                <h3>02. Auditoria IA</h3>
-                <p>Uso de inteligência artificial avançada para revisão de código e detecção preventiva de vulnerabilidades e bugs críticos.</p>
-            </div>
-            <div class="method-card highlight">
-                <h3>03. Segurança & Criptografia</h3>
-                <p>Implementação nativa de HTTPS forçado e protocolos de criptografia de ponta a ponta, protegendo a integridade de todos os dados trafegados.</p>
-            </div>
-            <div class="method-card">
-                <h3>04. Design Modular</h3>
-                <p>Sistemas construídos em blocos independentes, permitindo escalabilidade rápida e manutenção sem interrupção dos serviços.</p>
-            </div>
-            <div class="method-card">
-                <h3>05. Performance Ágil</h3>
-                <p>Otimização de carregamento e tempo de resposta, focado na experiência do usuário e na eficiência do servidor.</p>
-            </div>
-        </div>
-
-        <footer>
-            Developed by: Paulo Pkacci by 2026. <br>
-            Restoration Point: Pkacci-Methodology-Premium-V1
-        </footer>
+    <a href="index.html" style="color:var(--primary); text-decoration:none;">← Voltar</a>
+    <h1>MÉTODO PKACCI (V. X.1)</h1>
+    <div class="card">
+        <h3>01. Infraestrutura Cloud Resiliente</h3>
+        <p>Arquitetura baseada em clusters globais com redundância de DNS (4 IPs ativos).</p>
     </div>
+    <div class="card">
+        <h3>02. Engenharia de Software Auditada</h3>
+        <p>Desenvolvimento modular validado por inteligência artificial para máxima qualidade de código.</p>
+    </div>
+    <div class="card">
+        <h3>03. Segurança & Ecossistema</h3>
+        <p>Integração segura com Firebase e HTTPS forçado em todas as camadas.</p>
+    </div>
+    <footer style="text-align:center; font-size:0.7rem; margin-top:40px;">Developed by: Paulo Pkacci by 2026</footer>
 </body>
 </html>

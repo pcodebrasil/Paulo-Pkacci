@@ -3,87 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paulo Pkacci | Engenheiro & Arquiteto de Sistemas</title>
+    <title>Paulo Pkacci | Engenheiro de Sistemas & Arquiteto</title>
     <style>
-        /* [Estilos anteriores mantidos para consistência] */
-        :root {
-            --primary-color: #00d4ff;
-            --bg-dark: #050505;
-            --card-bg: #111111;
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
+        :root { --primary: #00d4ff; --bg: #000000; --card: #0a0a0a; --text: #ffffff; --subtext: #a0a0a0; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+        .hero { padding: 40px 20px; }
+        h1 { font-size: 3.5rem; color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 4px; }
+        .subtitle { font-size: 1.2rem; color: var(--subtext); margin: 20px 0; letter-spacing: 2px; }
+        
+        /* BOTÃO CORRIGIDO: Aponta para o arquivo físico criado no repositório */
+        .btn-main { 
+            display: inline-block; padding: 15px 30px; border: 1px solid var(--primary); 
+            color: var(--primary); text-decoration: none; border-radius: 5px; 
+            font-size: 1rem; transition: 0.3s; margin-top: 30px;
         }
+        .btn-main:hover { background: var(--primary); color: var(--bg); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-
-        header { padding: 100px 0 60px; text-align: center; }
-        h1 { font-size: 3.5rem; color: var(--primary-color); text-transform: uppercase; margin-bottom: 10px; }
-        .role-title { font-size: 1.1rem; letter-spacing: 5px; color: var(--text-dim); margin-bottom: 30px; }
-
-        /* Novo Botão de Navegação para Metodologia */
-        .btn-secondary {
-            display: inline-block;
-            padding: 10px 25px;
-            color: var(--primary-color);
-            text-decoration: none;
-            border: 1px solid var(--primary-color);
-            border-radius: 5px;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        .btn-secondary:hover { background: rgba(0, 212, 255, 0.1); }
-
-        .services-section { padding: 80px 0; }
-        .section-title { text-align: center; margin-bottom: 50px; font-size: 2rem; color: var(--primary-color); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .service-card { background: var(--card-bg); padding: 40px; border-radius: 15px; border: 1px solid #222; transition: all 0.3s ease; }
-        .service-card:hover { border-color: var(--primary-color); transform: translateY(-10px); }
-        .service-card h3 { margin-bottom: 15px; color: var(--primary-color); }
-        .cta-box { background: linear-gradient(145deg, #111, #000); padding: 50px; border-radius: 20px; text-align: center; margin: 80px 0; border: 1px solid #333; }
-        .btn-live { display: inline-block; padding: 18px 40px; background-color: var(--primary-color); color: #000; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 25px; }
-        footer { text-align: center; padding: 60px 0; border-top: 1px solid #222; color: #444; }
+        .expertise { margin-top: 80px; width: 100%; max-width: 400px; }
+        .card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #1a1a1a; margin: 10px; }
+        .card h3 { color: var(--primary); margin: 0; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>PAULO PKACCI</h1>
-            <div class="role-title">Engenheiro de Sistemas & Arquiteto</div>
-            <a href="metodologia.html" class="btn-secondary">Conhecer Minha Metodologia</a>
-        </header>
+    <section class="hero">
+        <h1>PAULO PKACCI</h1>
+        <p class="subtitle">Engenheiro de Sistemas & Arquiteto</p>
+        
+        <a href="metodologia.html" class="btn-main">Conhecer Minha Metodologia</a>
+    </section>
 
-        <section class="services-section">
-            <h2 class="section-title">Serviços & Expertise</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Arquitetura Cloud</h3>
-                    <p>Design de infraestruturas resilientes utilizando Firebase e GitHub [cite: 2026-01-24].</p>
-                </div>
-                <div class="service-card">
-                    <h3>Engenharia de Dados</h3>
-                    <p>Sistemas em tempo real com segurança robusta e regras de acesso avançadas [cite: 2026-01-29].</p>
-                </div>
-                <div class="service-card">
-                    <h3>Segurança & SSL</h3>
-                    <p>Implementação de protocolos HTTPS para ativação de recursos nativos [cite: 2026-01-28].</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="cta-box">
-            <h2>New Market System</h2>
-            <p>Sistema de gestão de validades operando em subdomínio de alta performance.</p>
-            <a href="https://newmarket.pkacci.com.br" class="btn-live" target="_blank">Ver Projeto em Tempo Real</a>
+    <section class="expertise">
+        <h2 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 30px;">Serviços & Expertise</h2>
+        <div class="card">
+            <h3>Arquitetura Cloud</h3>
         </div>
+    </section>
 
-        <footer>
-            Developed by: Paulo Pkacci by 2026. <br>
-            Restoration Point: Pkacci-Main-Core-V3
-        </footer>
-    </div>
+    <footer style="margin-top: 50px; color: #333; font-size: 0.8rem;">
+        Developed by: Paulo Pkacci by 2026. <br>
+        Restoration Point: Pkacci-Vitrine-Final-V1
+    </footer>
 
 </body>
 </html>

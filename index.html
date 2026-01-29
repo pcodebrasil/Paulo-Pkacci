@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paulo Pkacci | Engenheiro & Arquiteto de Sistemas</title>
+    <style>
+        /* Estilização Global e Variáveis de Cores */
+        :root {
+            --primary-color: #00d4ff;
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Cabeçalho de Identidade Visual */
+        header { padding: 100px 0 60px; text-align: center; }
+        
+        h1 { font-size: 3.5rem; color: var(--primary-color); text-transform: uppercase; margin-bottom: 10px; }
+        
+        .role-title { font-size: 1.1rem; letter-spacing: 5px; color: var(--text-dim); }
+
+        /* Grid de Serviços Especializados */
+        .services-section { padding: 80px 0; }
+        
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2rem; color: var(--primary-color); }
+
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* Estilo dos Cards de Serviço com Comentários Internos */
+        .service-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+        }
+
+        .service-card h3 { margin-bottom: 15px; color: var(--primary-color); }
+        
+        .service-card p { font-size: 0.95rem; color: var(--text-dim); }
+
+        /* Destaque do Projeto New Market */
+        .cta-box {
+            background: linear-gradient(145deg, #111, #000);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 80px 0;
+            border: 1px solid #333;
+        }
+
+        .btn-live {
+            display: inline-block;
+            padding: 18px 40px;
+            background-color: var(--primary-color);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: opacity 0.3s;
+        }
+
+        footer { text-align: center; padding: 60px 0; border-top: 1px solid #222; color: #444; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>PAULO PKACCI</h1>
+            <div class="role-title">Engenheiro de Sistemas & Arquiteto</div>
+        </header>
+
+        <section class="services-section">
+            <h2 class="section-title">Serviços & Expertise</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Arquitetura Cloud</h3>
+                    <p>Design de infraestruturas resilientes utilizando Firebase e GitHub para garantir 99.9% de disponibilidade.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Engenharia de Dados</h3>
+                    <p>Sistemas em tempo real (Realtime) com segurança robusta e regras de acesso avançadas.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Segurança & SSL</h3>
+                    <p>Implementação de protocolos HTTPS para ativação de recursos nativos como câmeras e geolocalização.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="cta-box">
+            <h2>New Market System</h2>
+            <p>Sistema de gestão de validades operando em subdomínio de alta performance.</p>
+            <a href="https://newmarket.pkacci.com.br" class="btn-live" target="_blank">Ver Projeto em Tempo Real</a>
+        </div>
+
+        <footer>
+            Developed by: Paulo Pkacci by 2026. <br>
+            Restoration Point: Pkacci-Main-Core-V2
+        </footer>
+    </div>
+
+</body>
+</html>

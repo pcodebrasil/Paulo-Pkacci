@@ -3,49 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metodologia | Versão X.2</title>
+    <title>Metodologia | Systems Solutions Architect</title>
     <style>
-        :root { --primary: #00f2fe; --bg: #050505; --card-bg: #111; }
-        body { background: var(--bg); color: #fff; font-family: sans-serif; padding: 20px; }
-        .header { max-width: 800px; margin: 40px auto; text-align: left; }
+        :root { --primary: #00f2fe; --secondary: #4facfe; --bg: #050505; --card-bg: #111; }
+        
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; overflow-x: hidden; }
+
+        /* KEYFRAMES - Definição das animações */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header { 
+            max-width: 800px; margin: 40px auto; 
+            animation: fadeInUp 0.8s ease-out forwards; 
+        }
+
         .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 1px solid #222;
-            position: relative;
-            overflow: hidden;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            background: var(--card-bg); border-radius: 20px; padding: 30px; 
+            margin-bottom: 20px; border: 1px solid #222; position: relative; 
+            max-width: 800px; margin-left: auto; margin-right: auto;
+            opacity: 0; /* Começa invisível para a animação */
+            animation: fadeInUp 0.8s ease-out forwards;
+            transition: 0.3s transform;
         }
-        .card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 5px; height: 100%;
-            background: linear-gradient(to bottom, var(--primary), #4facfe);
-        }
-        h1 { color: var(--primary); font-size: 2.5rem; }
-        h3 { font-size: 1.5rem; margin-top: 0; color: #fff; }
+
+        /* Efeito de hover nos cards */
+        .card:hover { transform: scale(1.02); border-color: var(--primary); }
+
+        /* DELAYS - Efeito cascata para cada card */
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.6s; }
+
+        h1 { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem; }
+        h3 { color: #fff; margin-top: 0; }
         p { color: #aaa; line-height: 1.6; }
-        .back { color: var(--primary); text-decoration: none; font-weight: bold; }
+        .back { color: var(--primary); text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="header">
         <a href="index.html" class="back">← VOLTAR</a>
-        <h1>MÉTODO PKACCI (V. X.2)</h1>
+        <h1>MÉTODO PKACCI (V. X.3)</h1>
     </div>
+
     <div class="card">
         <h3>01. Infraestrutura Cloud</h3>
-        <p>Clusters globais redundantes e alta disponibilidade para sistemas críticos.</p>
+        <p>Arquitetura resiliente com redundância global e uptime garantido por múltiplos clusters.</p>
     </div>
+
     <div class="card">
         <h3>02. Engenharia Auditada</h3>
-        <p>Desenvolvimento assistido por IA e revisões modulares para segurança total.</p>
+        <p>Processos de desenvolvimento modular com auditoria preventiva via IA [cite: 2026-01-29].</p>
     </div>
+
     <div class="card">
         <h3>03. Ecossistema Seguro</h3>
-        <p>Criptografia de ponta e integrações robustas para proteção de dados.</p>
+        <p>Segurança multicamada com SSL/TLS e integrações robustas via Firebase.</p>
     </div>
+
+    <footer style="text-align:center; color:#333; font-size:0.8rem; margin-top:50px;">
+        Developed by: Paulo Pkacci by 2026 | Versão X.3
+    </footer>
 </body>
 </html>

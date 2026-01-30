@@ -2,235 +2,135 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PKACCI | Arquiteto de Soluções</title>
-    
-    <meta name="description" content="Soluções de Engenharia de Software, MVP e Consultoria CTO.">
-    <meta property="og:title" content="PKACCI - Soluções Digitais">
-    <meta property="og:description" content="Transforme sua ideia em software ou escale sua operação com arquitetura de elite.">
-    <meta property="og:image" content="https://github.com/paulo-pkacci.png">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Barber Pro | PKACCI System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- DESIGN SYSTEM (UI DNA) --- */
-        :root { 
-            --primary: #00f2fe; 
-            --secondary: #4facfe; 
-            --bg: #050505; 
-            --card-bg: #111; 
-            --text-muted: #888;
-            --success: #25d366;
-        }
-
-        /* Reset e Base */
-        body { 
-            background-color: var(--bg); 
-            color: #fff; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            overflow-x: hidden; 
-        }
-
-        /* Animações */
-        @keyframes revealName {
-            0% { opacity: 0; letter-spacing: 15px; filter: blur(10px); }
-            100% { opacity: 1; letter-spacing: 5px; filter: blur(0); }
-        }
-        @keyframes fadeInUp { 
-            from { opacity: 0; transform: translateY(30px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        /* --- VISTA 1: HOME --- */
-        #view-home {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: radial-gradient(circle at top, #111, var(--bg));
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        h1 { 
-            font-size: clamp(3rem, 10vw, 5rem); 
-            background: linear-gradient(to right, var(--primary), var(--secondary)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            margin: 0; 
-            font-weight: 800;
-        }
-
-        .role { font-size: 1.2rem; color: var(--text-muted); margin: 10px 0 40px; letter-spacing: 2px; text-transform: uppercase; }
+        :root { --bg: #0f111a; --card: #1a1d2e; --primary: #8257e5; --accent: #00f2fe; --text: #ffffff; --success: #00ff88; }
+        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; overflow-x: hidden; }
         
-        .btn-vivid { 
-            display: inline-block; padding: 18px 40px; 
-            background: linear-gradient(45deg, var(--primary), var(--secondary)); 
-            color: #000; text-decoration: none; font-weight: bold; 
-            border-radius: 50px; transition: 0.3s; cursor: pointer; border: none; font-size: 1rem;
-            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3); margin: 10px;
-        }
-        .btn-vivid:hover { transform: scale(1.05); filter: brightness(1.1); }
+        /* Utilitários de Visibilidade */
+        .hidden { display: none !important; }
 
-        .btn-outline {
-            display: inline-block; padding: 16px 38px; 
-            background: transparent; color: var(--primary); 
-            border: 2px solid var(--primary); font-weight: bold; 
-            border-radius: 50px; transition: 0.3s; cursor: pointer; font-size: 1rem; margin: 10px;
-        }
-        .btn-outline:hover { background: rgba(0, 242, 254, 0.1); }
+        /* --- UI COMUM --- */
+        .container { padding: 20px; }
+        .btn-main { background: linear-gradient(45deg, var(--primary), var(--accent)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 600; cursor: pointer; width: 100%; }
 
-        /* --- SEÇÕES INTERNAS (Comuns) --- */
-        .section-view {
-            display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh; padding-bottom: 100px; 
-        }
+        /* --- UI BARBEIRO --- */
+        .header-admin { padding: 20px; background: rgba(26, 29, 46, 0.9); border-bottom: 1px solid #333; }
+        .balance-card { background: linear-gradient(135deg, #8257e5, #2e1a47); padding: 20px; border-radius: 20px; margin-top: 10px; }
+        .chart-container { background: var(--card); padding: 15px; border-radius: 20px; border: 1px solid #333; margin-top: 20px; }
+        .bars-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 80px; gap: 8px; }
+        .bar { width: 100%; background: rgba(130, 87, 229, 0.3); border-radius: 4px; min-height: 4px; }
+        .bar.active { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+        .appointment-card { background: var(--card); margin-top: 15px; padding: 15px; border-radius: 18px; display: flex; align-items: center; border: 1px solid #333; }
+        .client-info { flex-grow: 1; margin-left: 15px; }
 
-        .back-btn { 
-            color: var(--primary); background: none; border: none; 
-            font-size: 1rem; font-weight: bold; cursor: pointer; 
-            margin-bottom: 20px; padding: 0; display: inline-flex; align-items: center;
-        }
+        /* --- UI CLIENTE --- */
+        .client-view { text-align: center; padding-top: 40px; animation: fadeIn 0.5s; }
+        .logo-circle { width: 70px; height: 70px; background: var(--primary); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+        .input-box { background: var(--card); padding: 25px; border-radius: 25px; border: 1px solid #333; margin-top: 20px; text-align: left; }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #0f111a; border: 1px solid #333; color: white; border-radius: 12px; box-sizing: border-box; }
 
-        .card {
-            background: var(--card-bg); border-radius: 20px; padding: 25px; 
-            margin-bottom: 20px; border: 1px solid #222; position: relative; 
-            opacity: 0; animation: fadeInUp 0.8s ease-out forwards;
-            transition: 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1); }
-        .card::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--primary); }
-        
-        /* Delay nas animações */
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.4s; }
-        .card:nth-child(4) { animation-delay: 0.6s; }
-
-        h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.4rem; }
-        p { color: #aaa; line-height: 1.6; margin: 0 0 15px 0; }
-
-        /* Botão de Ação dentro do Card */
-        .card-action {
-            display: inline-block; font-size: 0.9rem; font-weight: bold;
-            color: #fff; text-decoration: none; padding: 8px 0;
-            border-bottom: 1px solid var(--primary); transition: 0.2s;
-        }
-        .card-action:hover { color: var(--primary); }
-
-        /* --- WHATSAPP FLOAT --- */
-        .whatsapp-float {
-            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
-            background-color: var(--success); color: #FFF; border-radius: 50px;
-            text-align: center; font-size: 30px; box-shadow: 2px 2px 3px #999;
-            z-index: 100; display: flex; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.3s; animation: pulse-green 2s infinite;
-        }
-        .whatsapp-float:hover { background-color: #128c7e; transform: scale(1.1); }
-        .whatsapp-icon { width: 35px; height: 35px; fill: white; }
-
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        .global-footer { text-align: center; font-size: 0.7rem; color: #333; padding: 20px; width: 100%; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <section id="view-home">
-        <div class="container" style="animation: revealName 1.2s ease-out forwards;">
-            <h1 style="letter-spacing: 8px;">PKACCI</h1>
-            <p class="role">Arquiteto de Soluções</p>
-            
-            <div>
-                <button onclick="switchView('solucoes')" class="btn-vivid">VER SOLUÇÕES</button>
+    <div id="adminView" class="hidden">
+        <header class="header-admin">
+            <h2 style="margin:0; font-size: 1.2rem;">Painel Administrativo</h2>
+            <div class="balance-card">
+                <small>Faturamento Hoje</small>
+                <div id="total" style="font-size: 1.8rem; font-weight: 600;">R$ 0,00</div>
             </div>
-            <div style="margin-top: 10px;">
-                <button onclick="switchView('protocolo')" class="btn-outline">METODOLOGIA</button>
+            <div class="chart-container">
+                <div class="bars-wrapper">
+                    <div class="bar" style="height: 30%;"></div>
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar" style="height: 45%;"></div>
+                    <div class="bar" style="height: 80%;"></div>
+                    <div class="bar active" id="todayBar" style="height: 10%;"></div>
+                </div>
             </div>
+            <button onclick="copyClientLink()" style="margin-top:15px; width:100%; background:none; border: 1px dashed var(--primary); color:var(--primary); padding:10px; border-radius:10px; font-size:0.7rem;">🔗 COPIAR LINK DO CLIENTE</button>
+        </header>
+        <div class="container" id="adminList"></div>
+    </div>
+
+    <div id="clientView" class="container client-view hidden">
+        <div class="logo-circle">B</div>
+        <h1>Agende seu Corte</h1>
+        <p style="opacity: 0.6;">Rápido, fácil e online.</p>
+        
+        <div class="input-box">
+            <label>Seu Nome</label>
+            <input type="text" id="cName" placeholder="Ex: Paulo Pkacci">
+            <label>Horário desejado</label>
+            <input type="time" id="cTime">
+            <button class="btn-main" style="margin-top: 20px;" onclick="clientBook()">Confirmar Agendamento</button>
         </div>
-        <footer class="global-footer" style="position: absolute; bottom: 0;">Developed by PKACCI © 2026 | vX.8.0</footer>
-    </section>
-
-    <section id="view-solucoes" class="section-view">
-        <button onclick="switchView('home')" class="back-btn">← VOLTAR</button>
-        <h1 style="font-size: 2.5rem; margin-bottom: 30px;">SOLUÇÕES</h1>
-
-        <div class="card">
-            <h3>01. Auditoria & Diagnóstico</h3>
-            <p>Seu sistema está lento ou instável? Realizo uma análise forense completa para identificar falhas de segurança e gargalos de performance.</p>
-            <a href="https://wa.me/5511932280031?text=Ol%C3%A1%20Pkacci,%20preciso%20de%20um%20Diagn%C3%B3stico%20T%C3%A9cnico%20no%20meu%20sistema." target="_blank" class="card-action">SOLICITAR ANÁLISE →</a>
-        </div>
-
-        <div class="card">
-            <h3>02. MVP Express (Startup)</h3>
-            <p>Tire sua ideia do papel em tempo recorde. Desenvolvimento ágil de Produto Mínimo Viável (Web/App) focado em validação de mercado.</p>
-            <a href="https://wa.me/5511932280031?text=Ol%C3%A1%20Pkacci,%20tenho%20uma%20ideia%20de%20Startup%20e%20quero%20lan%C3%A7ar%20o%20MVP." target="_blank" class="card-action">LANÇAR MINHA IDEIA →</a>
-        </div>
-
-        <div class="card">
-            <h3>03. CTO as a Service</h3>
-            <p>Tenha um Arquiteto Sênior liderando a tecnologia da sua empresa. Gestão técnica, decisão de stack e arquitetura por assinatura mensal.</p>
-            <a href="https://wa.me/5511932280031?text=Ol%C3%A1%20Pkacci,%20gostaria%20de%20saber%20sobre%20a%20consultoria%20de%20CTO." target="_blank" class="card-action">CONTRATAR GESTÃO →</a>
-        </div>
-
-        <footer class="global-footer" style="margin-top: 50px;">Developed by PKACCI © 2026 | vX.8.0</footer>
-    </section>
-
-    <section id="view-protocolo" class="section-view">
-        <button onclick="switchView('home')" class="back-btn">← VOLTAR</button>
-        <h1 style="font-size: 2.5rem; margin-bottom: 30px;">O PROTOCOLO</h1>
-
-        <div class="card">
-            <h3>01. Consultoria Estratégica</h3>
-            <p>Não apenas escrevo código. Entendo sua dor de negócio e desenho a solução técnica exata para resolver o problema, reduzindo custos e riscos.</p>
-        </div>
-        <div class="card">
-            <h3>02. MVP & Lançamento Rápido</h3>
-            <p>Transformo sua ideia em software funcional em tempo recorde. Foco total em validar seu produto no mercado, eliminando a burocracia.</p>
-            <div class="card">
-    <h3>02. MVP Express (Startup)</h3>
-    <p>Tire sua ideia do papel em tempo recorde. Desenvolvimento ágil de Produto Mínimo Viável.</p>
-    
-    <a href="https://wa.me/5511932280031?..." target="_blank" class="card-action">LANÇAR MINHA IDEIA →</a>
-    
-    <br>
-    <a href="agenda.html" class="card-action" style="color: #fff; border-color: #555; margin-top:10px;">👁 VER DEMO AO VIVO</a>
-            </div>
-            
-        </div>
-        <div class="card">
-            <h3>03. Arquitetura Escalável</h3>
-            <p>Sistemas que começam pequenos e aguentam crescer. Infraestrutura moderna, segura e pronta para receber milhares de usuários no futuro.</p>
-        </div>
-
-        <footer class="global-footer" style="margin-top: 50px;">Developed by PKACCI © 2026 | vX.8.0</footer>
-    </section>
-
-    <a href="https://wa.me/5511932280031?text=Ol%C3%A1%20Pkacci,%20vim%20pelo%20site." class="whatsapp-float" target="_blank">
-        <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-4-10.5-6.8z"/>
-        </svg>
-    </a>
+    </div>
 
     <script>
-        function switchView(viewName) {
-            // Esconde todas as views
-            document.querySelectorAll('section').forEach(el => el.style.display = 'none');
-            
-            // Exibe a view desejada e rola para o topo
-            const target = document.getElementById('view-' + viewName);
-            if (target) {
-                if (viewName === 'home') target.style.display = 'flex'; // Home é flex
-                else target.style.display = 'block'; // Outras são block
-                window.scrollTo(0,0);
+        // LÓGICA DE ROTEAMENTO (ARQUITETURA SPA)
+        const params = new URLSearchParams(window.location.search);
+        const isClient = params.get('view') === 'client';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if(isClient) {
+                document.getElementById('clientView').classList.remove('hidden');
+            } else {
+                document.getElementById('adminView').classList.remove('hidden');
+                renderAdmin();
             }
+        });
+
+        function clientBook() {
+            const name = document.getElementById('cName').value;
+            const time = document.getElementById('cTime').value;
+            if(!name || !time) return alert("Preencha os campos!");
+
+            const item = { id: Date.now(), name, time, price: 25 };
+            let data = JSON.parse(localStorage.getItem('barber_v7')) || [];
+            data.push(item);
+            localStorage.setItem('barber_v7', JSON.stringify(data));
+            
+            alert("Agendado com sucesso!");
+            location.reload(); 
         }
-        
-        // Garante que inicia na home
-        switchView('home');
+
+        function copyClientLink() {
+            const link = window.location.href.split('?')[0] + '?view=client';
+            navigator.clipboard.writeText(link);
+            alert("Link copiado! Envie para seus clientes.");
+        }
+
+        function del(id) {
+            let data = JSON.parse(localStorage.getItem('barber_v7')) || [];
+            data = data.filter(i => i.id !== id);
+            localStorage.setItem('barber_v7', JSON.stringify(data));
+            renderAdmin();
+        }
+
+        function renderAdmin() {
+            const list = document.getElementById('adminList');
+            const data = JSON.parse(localStorage.getItem('barber_v7')) || [];
+            let total = 0;
+            list.innerHTML = "";
+            data.sort((a,b) => a.time.localeCompare(b.time)).forEach(item => {
+                total += item.price;
+                list.innerHTML += `
+                    <div class="appointment-card">
+                        <div style="font-weight:bold; color:var(--primary);">${item.time}</div>
+                        <div class="client-info"><h3>${item.name}</h3></div>
+                        <button onclick="window.open('https://wa.me/?text=Confirmado')" style="border:none; background:var(--success); color:#000; padding:8px 12px; border-radius:8px; font-weight:bold; font-size:0.7rem;">ZAP</button>
+                        <button onclick="del(${item.id})" style="border:none; background:none; color:red; margin-left:10px; font-size:1.2rem;">×</button>
+                    </div>`;
+            });
+            document.getElementById('total').innerText = `R$ ${total},00`;
+            document.getElementById('todayBar').style.height = Math.min((total/500)*100, 100) + '%';
+        }
     </script>
 </body>
 </html>

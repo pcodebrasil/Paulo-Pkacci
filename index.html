@@ -2,135 +2,120 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Barber Pro | PKACCI System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKACCI | Solutions Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f111a; --card: #1a1d2e; --primary: #8257e5; --accent: #00f2fe; --text: #ffffff; --success: #00ff88; }
-        body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; overflow-x: hidden; }
-        
-        /* Utilitários de Visibilidade */
-        .hidden { display: none !important; }
+        :root { 
+            --bg: #050505; --card: #111; --primary: #8257e5; 
+            --accent: #00f2fe; --text: #f5f5f5; 
+        }
 
-        /* --- UI COMUM --- */
-        .container { padding: 20px; }
-        .btn-main { background: linear-gradient(45deg, var(--primary), var(--accent)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 600; cursor: pointer; width: 100%; }
+        body { 
+            background: var(--bg); color: var(--text); 
+            font-family: 'Poppins', sans-serif; margin: 0; overflow-x: hidden;
+        }
 
-        /* --- UI BARBEIRO --- */
-        .header-admin { padding: 20px; background: rgba(26, 29, 46, 0.9); border-bottom: 1px solid #333; }
-        .balance-card { background: linear-gradient(135deg, #8257e5, #2e1a47); padding: 20px; border-radius: 20px; margin-top: 10px; }
-        .chart-container { background: var(--card); padding: 15px; border-radius: 20px; border: 1px solid #333; margin-top: 20px; }
-        .bars-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 80px; gap: 8px; }
-        .bar { width: 100%; background: rgba(130, 87, 229, 0.3); border-radius: 4px; min-height: 4px; }
-        .bar.active { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-        .appointment-card { background: var(--card); margin-top: 15px; padding: 15px; border-radius: 18px; display: flex; align-items: center; border: 1px solid #333; }
-        .client-info { flex-grow: 1; margin-left: 15px; }
+        /* --- ANIMAÇÕES DE ELITE --- */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* --- UI CLIENTE --- */
-        .client-view { text-align: center; padding-top: 40px; animation: fadeIn 0.5s; }
-        .logo-circle { width: 70px; height: 70px; background: var(--primary); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
-        .input-box { background: var(--card); padding: 25px; border-radius: 25px; border: 1px solid #333; margin-top: 20px; text-align: left; }
-        input { width: 100%; padding: 15px; margin: 10px 0; background: #0f111a; border: 1px solid #333; color: white; border-radius: 12px; box-sizing: border-box; }
+        .animate { animation: reveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) both; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- HEADER & HERO --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 20px; background: radial-gradient(circle at center, #1a1a2e 0%, #050505 100%);
+        }
+
+        .logo-main {
+            font-size: 3rem; font-weight: 600; letter-spacing: -2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .tagline { opacity: 0.6; font-size: 1rem; max-width: 300px; margin-bottom: 40px; }
+
+        /* --- HIERARQUIA PKACCI (O DIFERENCIAL) --- */
+        .hierarchy-section { padding: 60px 20px; background: var(--card); }
+        .step-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px; border-radius: 20px; margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        .step-card:hover { border-color: var(--primary); background: rgba(130, 87, 229, 0.05); }
+        .step-num { color: var(--accent); font-weight: 600; font-size: 0.8rem; }
+
+        /* --- BOTÕES DE CONVERSÃO --- */
+        .cta-container { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
+        .btn-premium {
+            padding: 18px; border-radius: 15px; border: none; font-weight: 600;
+            text-decoration: none; font-size: 1rem; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(130, 87, 229, 0.3); }
+        .btn-outline { background: transparent; border: 1px solid #333; color: white; }
+        .btn-premium:active { transform: scale(0.95); }
+
+        footer { padding: 40px; text-align: center; font-size: 0.7rem; opacity: 0.4; }
     </style>
 </head>
 <body>
 
-    <div id="adminView" class="hidden">
-        <header class="header-admin">
-            <h2 style="margin:0; font-size: 1.2rem;">Painel Administrativo</h2>
-            <div class="balance-card">
-                <small>Faturamento Hoje</small>
-                <div id="total" style="font-size: 1.8rem; font-weight: 600;">R$ 0,00</div>
-            </div>
-            <div class="chart-container">
-                <div class="bars-wrapper">
-                    <div class="bar" style="height: 30%;"></div>
-                    <div class="bar" style="height: 60%;"></div>
-                    <div class="bar" style="height: 45%;"></div>
-                    <div class="bar" style="height: 80%;"></div>
-                    <div class="bar active" id="todayBar" style="height: 10%;"></div>
-                </div>
-            </div>
-            <button onclick="copyClientLink()" style="margin-top:15px; width:100%; background:none; border: 1px dashed var(--primary); color:var(--primary); padding:10px; border-radius:10px; font-size:0.7rem;">🔗 COPIAR LINK DO CLIENTE</button>
-        </header>
-        <div class="container" id="adminList"></div>
-    </div>
-
-    <div id="clientView" class="container client-view hidden">
-        <div class="logo-circle">B</div>
-        <h1>Agende seu Corte</h1>
-        <p style="opacity: 0.6;">Rápido, fácil e online.</p>
-        
-        <div class="input-box">
-            <label>Seu Nome</label>
-            <input type="text" id="cName" placeholder="Ex: Paulo Pkacci">
-            <label>Horário desejado</label>
-            <input type="time" id="cTime">
-            <button class="btn-main" style="margin-top: 20px;" onclick="clientBook()">Confirmar Agendamento</button>
+    <section class="hero">
+        <div class="logo-main animate">PKACCI</div>
+        <div class="tagline animate" style="animation-delay: 0.2s;">
+            Sistemas de Engenharia & Arquitetura Digital de Alta Performance.
         </div>
-    </div>
+        
+        <div class="cta-container animate" style="animation-delay: 0.4s;">
+            <a href="https://wa.me/seu-numero?text=Olá, quero um sistema de alta performance." class="btn-premium btn-primary">Solicitar Projeto</a>
+            <a href="#solucoes" class="btn-premium btn-outline">Ver Metodologia</a>
+        </div>
+    </section>
+
+    <section id="solucoes" class="hierarchy-section">
+        <h2 class="animate" style="text-align:center; margin-bottom:40px;">Metodologia 15 Etapas</h2>
+        
+        <div class="step-card animate" style="animation-delay: 0.1s;">
+            <div class="step-num">01. HUMANA</div>
+            <h3 style="margin:5px 0;">Alinhamento Estratégico</h3>
+            <p style="font-size:0.8rem; opacity:0.6; margin:0;">Entendemos o seu negócio antes de tocar em uma linha de código.</p>
+        </div>
+
+        <div class="step-card animate" style="animation-delay: 0.2s;">
+            <div class="step-num">02. ENGENHEIRO</div>
+            <h3 style="margin:5px 0;">Lógica & Blindagem</h3>
+            <p style="font-size:0.8rem; opacity:0.6; margin:0;">Código anti-erro com foco em performance e segurança de dados.</p>
+        </div>
+
+        <div class="step-card animate" style="animation-delay: 0.3s;">
+            <div class="step-num">03. ARQUITETO</div>
+            <h3 style="margin:5px 0;">Visão & Escala</h3>
+            <p style="font-size:0.8rem; opacity:0.6; margin:0;">Sistemas prontos para crescer, integrados e escaláveis.</p>
+        </div>
+    </section>
+
+    <footer>
+        Developed by: Paulo Pkacci by 2026. <br>
+        Engenharia Pro | Todos os direitos reservados.
+    </footer>
 
     <script>
-        // LÓGICA DE ROTEAMENTO (ARQUITETURA SPA)
-        const params = new URLSearchParams(window.location.search);
-        const isClient = params.get('view') === 'client';
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if(isClient) {
-                document.getElementById('clientView').classList.remove('hidden');
-            } else {
-                document.getElementById('adminView').classList.remove('hidden');
-                renderAdmin();
-            }
-        });
-
-        function clientBook() {
-            const name = document.getElementById('cName').value;
-            const time = document.getElementById('cTime').value;
-            if(!name || !time) return alert("Preencha os campos!");
-
-            const item = { id: Date.now(), name, time, price: 25 };
-            let data = JSON.parse(localStorage.getItem('barber_v7')) || [];
-            data.push(item);
-            localStorage.setItem('barber_v7', JSON.stringify(data));
-            
-            alert("Agendado com sucesso!");
-            location.reload(); 
-        }
-
-        function copyClientLink() {
-            const link = window.location.href.split('?')[0] + '?view=client';
-            navigator.clipboard.writeText(link);
-            alert("Link copiado! Envie para seus clientes.");
-        }
-
-        function del(id) {
-            let data = JSON.parse(localStorage.getItem('barber_v7')) || [];
-            data = data.filter(i => i.id !== id);
-            localStorage.setItem('barber_v7', JSON.stringify(data));
-            renderAdmin();
-        }
-
-        function renderAdmin() {
-            const list = document.getElementById('adminList');
-            const data = JSON.parse(localStorage.getItem('barber_v7')) || [];
-            let total = 0;
-            list.innerHTML = "";
-            data.sort((a,b) => a.time.localeCompare(b.time)).forEach(item => {
-                total += item.price;
-                list.innerHTML += `
-                    <div class="appointment-card">
-                        <div style="font-weight:bold; color:var(--primary);">${item.time}</div>
-                        <div class="client-info"><h3>${item.name}</h3></div>
-                        <button onclick="window.open('https://wa.me/?text=Confirmado')" style="border:none; background:var(--success); color:#000; padding:8px 12px; border-radius:8px; font-weight:bold; font-size:0.7rem;">ZAP</button>
-                        <button onclick="del(${item.id})" style="border:none; background:none; color:red; margin-left:10px; font-size:1.2rem;">×</button>
-                    </div>`;
+        // Intersection Observer para disparar animações ao rolar a página
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
             });
-            document.getElementById('total').innerText = `R$ ${total},00`;
-            document.getElementById('todayBar').style.height = Math.min((total/500)*100, 100) + '%';
-        }
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

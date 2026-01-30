@@ -4,20 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paulo Pkacci | Systems Solutions Architect</title>
-    <style>
-        :root { --primary: #00f2fe; --secondary: #4facfe; --bg: #050505; }
-        body { background: radial-gradient(circle at top, #111, var(--bg)); color: #fff; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
-        
+    
+    <meta name="description" content="Portfólio e Metodologia de Paulo Pkacci. Arquitetura de Sistemas e IA.">
+    <meta property="og:title" content="Paulo Pkacci - Systems Solutions Architect">
+    <meta property="og:description" content="Conheça a metodologia de desenvolvimento Cloud Native e IA.">
+    <meta property="og:image" content="https://github.com/paulo-pkacci.png"> <style>
+        /* --- DESIGN SYSTEM (UI DNA) --- */
+        :root { 
+            --primary: #00f2fe; 
+            --secondary: #4facfe; 
+            --bg: #050505; 
+            --card-bg: #111; 
+            --text-muted: #888;
+        }
+
+        /* Reset e Base */
+        body { 
+            background-color: var(--bg); 
+            color: #fff; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            overflow-x: hidden; /* Evita scroll horizontal no mobile */
+        }
+
+        /* Animações Globais */
         @keyframes revealName {
             0% { opacity: 0; letter-spacing: 15px; filter: blur(10px); }
             100% { opacity: 1; letter-spacing: -1px; filter: blur(0); }
         }
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* --- VISTA 1: HOME (Centralizada) --- */
+        #view-home {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at top, #111, var(--bg));
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 { 
+            font-size: clamp(2.5rem, 8vw, 4rem); 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin: 0; 
+        }
+
+        .role { 
+            font-size: 1.2rem; 
+            color: var(--text-muted); 
+            margin: 10px 0 40px; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+        }
         
-        .container { text-align: center; animation: revealName 1.2s ease-out forwards; }
-        h1 { font-size: clamp(2.5rem, 8vw, 4rem); background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
-        .role { font-size: 1.2rem; color: #888; margin: 10px 0 40px; letter-spacing: 2px; text-transform: uppercase; }
-        
-        /* Estilo do botão unificado */
+        /* Botão Vivid */
         .btn-vivid { 
             display: inline-block; padding: 18px 40px; 
             background: linear-gradient(45deg, var(--primary), var(--secondary)); 
@@ -25,18 +74,108 @@
             border-radius: 50px; transition: 0.3s; 
             box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3); 
             cursor: pointer;
+            border: none;
+            font-size: 1rem;
         }
         .btn-vivid:hover { transform: scale(1.05); filter: brightness(1.1); }
-        footer { position: absolute; bottom: 20px; font-size: 0.7rem; color: #333; }
+
+        /* --- VISTA 2: METODOLOGIA (Lista/Cards) --- */
+        #view-metodologia {
+            display: none; /* Oculto por padrão */
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .back-btn { 
+            color: var(--primary); 
+            background: none; border: none; 
+            font-size: 1rem; font-weight: bold; 
+            cursor: pointer; margin-bottom: 20px; 
+            display: inline-flex; align-items: center;
+            padding: 0;
+        }
+
+        .card {
+            background: var(--card-bg); border-radius: 20px; padding: 25px; 
+            margin-bottom: 20px; border: 1px solid #222; position: relative; 
+            opacity: 0; animation: fadeInUp 0.8s ease-out forwards;
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1); }
+        .card::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--primary); }
+        
+        /* Delays de Animação */
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.6s; }
+
+        h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.4rem; }
+        p { color: #aaa; line-height: 1.6; margin: 0; }
+
+        /* Footer Global */
+        .global-footer { 
+            text-align: center; 
+            font-size: 0.7rem; 
+            color: #333; 
+            padding: 20px; 
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>PAULO PKACCI</h1>
-        <p class="role">Systems Solutions Architect</p>
+
+    <section id="view-home">
+        <div class="container" style="animation: revealName 1.2s ease-out forwards;">
+            <h1>PAULO PKACCI</h1>
+            <p class="role">Systems Solutions Architect</p>
+            
+            <button onclick="switchView('metodologia')" class="btn-vivid">VER METODOLOGIA</button>
+        </div>
+        <footer class="global-footer" style="position: absolute; bottom: 0;">Developed by: Paulo Pkacci by 2026 | Versão X.6.0</footer>
+    </section>
+
+
+    <section id="view-metodologia">
+        <button onclick="switchView('home')" class="back-btn">← VOLTAR</button>
         
-        <a href="metodologia.html" class="btn-vivid">VER METODOLOGIA</a>
-    </div>
-    <footer>Developed by: Paulo Pkacci by 2026 | Versão X.4.1</footer>
+        <h1 style="font-size: 2.5rem; margin-bottom: 30px;">METODOLOGIA DIGITAL</h1>
+
+        <div class="card">
+            <h3>01. Arquitetura Cloud & DevOps</h3>
+            <p>Infraestrutura escalável e automação de deploy com foco em alta disponibilidade e performance global.</p>
+        </div>
+
+        <div class="card">
+            <h3>02. Inteligência Artificial Generativa</h3>
+            <p>Desenvolvimento de soluções baseadas em LLMs, automação de processos e análise de dados inteligente [cite: 2026-01-29].</p>
+        </div>
+
+        <div class="card">
+            <h3>03. Segurança & DevSecOps</h3>
+            <p>Auditoria de código via IA e proteção de dados em tempo real utilizando o ecossistema Firebase.</p>
+        </div>
+
+        <footer class="global-footer" style="margin-top: 50px;">
+            Developed by: Paulo Pkacci by 2026 | Versão X.6.0
+        </footer>
+    </section>
+
+    <script>
+        function switchView(viewName) {
+            const home = document.getElementById('view-home');
+            const metodologia = document.getElementById('view-metodologia');
+
+            if (viewName === 'metodologia') {
+                home.style.display = 'none';
+                metodologia.style.display = 'block';
+                window.scrollTo(0,0); // Rola para o topo
+            } else {
+                metodologia.style.display = 'none';
+                home.style.display = 'flex'; // Flex para manter centralização
+            }
+        }
+    </script>
 </body>
 </html>

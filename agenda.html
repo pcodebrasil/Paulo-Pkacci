@@ -11,12 +11,13 @@
         :root { 
             --bg: #121214; 
             --surface: #202024; 
-            --primary: #8257e5; /* Roxo Tech */
+            --primary: #8257e5; 
             --primary-light: #996dff;
             --text: #e1e1e6; 
             --text-muted: #a8a8b3;
             --success: #04d361;
             --danger: #e83f5b;
+            --whatsapp: #25d366;
         }
 
         body { 
@@ -24,11 +25,11 @@
             color: var(--text); 
             font-family: 'Segoe UI', sans-serif; 
             margin: 0; padding: 0; 
-            padding-bottom: 80px; /* Espaço para menu inferior */
+            padding-bottom: 80px; 
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- DASHBOARD HEADER --- */
+        /* --- HEADER FINANCEIRO --- */
         .dashboard-header {
             background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
             padding: 25px 20px 10px;
@@ -59,18 +60,25 @@
             align-items: center;
             border-left: 4px solid var(--primary);
             animation: slideIn 0.3s ease-out;
+            position: relative;
         }
         .time-box {
             background: #29292e; padding: 10px; border-radius: 8px; text-align: center; min-width: 50px; margin-right: 15px;
         }
         .time-box span { display: block; font-weight: bold; color: var(--text); }
-        .time-box small { font-size: 0.7rem; color: var(--text-muted); }
         
+        .client-info { flex-grow: 1; }
         .client-info h3 { margin: 0; font-size: 1rem; }
         .client-info p { margin: 4px 0 0; font-size: 0.8rem; color: var(--text-muted); }
-        .price-tag { margin-left: auto; font-weight: bold; color: var(--success); font-size: 0.9rem; }
         
-        .btn-delete { background: none; border: none; color: var(--danger); margin-left: 15px; cursor: pointer; }
+        .actions { display: flex; align-items: center; gap: 15px; }
+        .price-tag { font-weight: bold; color: var(--success); font-size: 0.9rem; margin-right: 10px; }
+        
+        /* Botões de Ação */
+        .btn-icon { background: none; border: none; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
+        .btn-zap { color: var(--whatsapp); }
+        .btn-zap:hover { transform: scale(1.2); }
+        .btn-del { color: var(--danger); }
 
         /* --- FAB (Floating Action Button) --- */
         .fab {
@@ -81,7 +89,7 @@
             color: #fff; font-size: 1.5rem; border: none;
         }
 
-        /* --- MODAL DE NOVO AGENDAMENTO --- */
+        /* --- MODAL --- */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 200; align-items: end;
@@ -98,7 +106,6 @@
         }
         input:focus { border-color: var(--primary); }
 
-        /* Seleção de Serviços (Chips) */
         .chips-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
         .chip {
             background: var(--bg); border: 1px solid #333; padding: 10px 20px; border-radius: 50px;
@@ -111,7 +118,7 @@
             border: none; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer;
         }
 
-        /* --- BOTTOM NAVIGATION --- */
+        /* --- NAV --- */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; background: var(--surface);
             display: flex; justify-content: space-around; padding: 15px 0;
@@ -119,12 +126,7 @@
         }
         .nav-item { color: var(--text-muted); text-decoration: none; font-size: 1.5rem; position: relative; }
         .nav-item.active { color: var(--primary); }
-        .nav-item.active::after {
-            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-            width: 5px; height: 5px; background: var(--primary); border-radius: 50%;
-        }
 
-        /* Animações */
         @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
@@ -139,7 +141,6 @@
             </div>
             <a href="index.html" style="color:white; text-decoration:none;"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </div>
-
         <div class="balance-card">
             <div>
                 <span class="balance-label">Faturamento Hoje</span>
@@ -154,29 +155,23 @@
         <small style="color:var(--text-muted)" id="dateDisplay">--/--</small>
     </div>
 
-    <div id="appointmentsList" style="padding-bottom: 20px;">
-        <p style="text-align:center; color:#444; margin-top:30px;">Nenhum cliente agendado.</p>
-    </div>
+    <div id="appointmentsList" style="padding-bottom: 20px;"></div>
 
-    <button class="fab" onclick="openModal()">
-        <i class="fas fa-plus"></i>
-    </button>
+    <button class="fab" onclick="openModal()"><i class="fas fa-plus"></i></button>
 
     <nav class="bottom-nav">
         <a href="#" class="nav-item active"><i class="fas fa-home"></i></a>
         <a href="#" class="nav-item"><i class="fas fa-calendar-alt"></i></a>
-        <a href="#" class="nav-item"><i class="fas fa-user"></i></a>
+        <a href="#" class="nav-item"><i class="fas fa-chart-line"></i></a>
     </nav>
 
     <div id="modalApp" class="modal" onclick="if(event.target === this) closeModal()">
         <div class="modal-content">
             <h3 style="margin-top:0;">Novo Cliente</h3>
-            
             <div class="form-group">
                 <label>Nome do Cliente</label>
                 <input type="text" id="clientName" placeholder="Ex: Ricardo Silva">
             </div>
-
             <div class="form-group">
                 <label>Serviço</label>
                 <div class="chips-container">
@@ -185,37 +180,28 @@
                     <div class="chip" onclick="selectService(this, 50)">Completo (R$50)</div>
                 </div>
             </div>
-
             <div class="form-group">
                 <label>Horário</label>
                 <input type="time" id="appTime">
             </div>
-
             <button class="btn-confirm" onclick="saveAppointment()">CONFIRMAR AGENDAMENTO</button>
         </div>
     </div>
 
     <script>
-        // --- LÓGICA DO APP ---
         let selectedPrice = 35;
         let selectedService = "Cabelo";
 
-        // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             loadAppointments();
-            updateDate();
+            const now = new Date();
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            document.getElementById('dateDisplay').innerText = now.toLocaleDateString('pt-BR', options);
         });
 
-        function updateDate() {
-            const now = new Date();
-            document.getElementById('dateDisplay').innerText = now.toLocaleDateString('pt-BR');
-        }
-
-        // Modal Functions
         function openModal() { document.getElementById('modalApp').style.display = 'flex'; }
         function closeModal() { document.getElementById('modalApp').style.display = 'none'; }
 
-        // Seleção de Serviço Visual
         function selectService(element, price) {
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             element.classList.add('active');
@@ -223,12 +209,11 @@
             selectedService = element.innerText.split(' (')[0];
         }
 
-        // Salvar e Carregar
         function saveAppointment() {
             const name = document.getElementById('clientName').value;
             const time = document.getElementById('appTime').value;
 
-            if(!name || !time) return alert("Preencha o nome e horário!");
+            if(!name || !time) return alert("Preencha nome e horário!");
 
             const appointment = {
                 id: Date.now(),
@@ -240,13 +225,11 @@
 
             let apps = JSON.parse(localStorage.getItem('barber_data')) || [];
             apps.push(appointment);
-            apps.sort((a,b) => a.time.localeCompare(b.time)); // Ordenar por horário
+            apps.sort((a,b) => a.time.localeCompare(b.time)); 
             localStorage.setItem('barber_data', JSON.stringify(apps));
 
             closeModal();
             loadAppointments();
-            
-            // Limpar form
             document.getElementById('clientName').value = '';
         }
 
@@ -257,6 +240,13 @@
                 localStorage.setItem('barber_data', JSON.stringify(apps));
                 loadAppointments();
             }
+        }
+
+        // --- FUNÇÃO WHATSAPP (NOVA) ---
+        function sendZap(name, time, service) {
+            const msg = `Olá ${name}, confirmando seu horário de *${service}* hoje às *${time}*. Tudo certo? ✂️`;
+            // Abre o WhatsApp para escolher o contato (Genérico)
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function loadAppointments() {
@@ -283,13 +273,18 @@
                         <h3>${app.name}</h3>
                         <p>${app.service}</p>
                     </div>
-                    <div class="price-tag">R$ ${app.price},00</div>
-                    <button onclick="deleteApp(${app.id})" class="btn-delete"><i class="fas fa-trash"></i></button>
+                    <div class="actions">
+                        <div class="price-tag">R$ ${app.price}</div>
+                        <button onclick="sendZap('${app.name}', '${app.time}', '${app.service}')" class="btn-icon btn-zap">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button onclick="deleteApp(${app.id})" class="btn-icon btn-del">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
-
-            // Animação do Total Financeiro
             document.getElementById('dailyTotal').innerText = `R$ ${total},00`;
         }
     </script>

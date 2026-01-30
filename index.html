@@ -3,72 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>PKACCI | Systems Solutions Architect</title>
-    <meta name="description" content="Engenharia de Software e Arquitetura de Soluções. Sistemas blindados em 15 etapas.">
-    <meta property="og:title" content="PKACCI | Solutions Architect">
-    <meta property="og:description" content="Engenharia Pro: Do Problema à Inovação.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://sua-imagem-aqui.jpg"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>PKACCI | Solutions Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050505; --card: #0d0d0d; --primary: #8257e5; --accent: #00f2fe; --text: #f5f5f5; }
         body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; margin: 0; }
         
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
         .logo { font-size: 3.5rem; font-weight: 600; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
         
-        /* GRID DE METODOLOGIA */
-        .methodology-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 40px 20px; }
+        /* GRID DE 15 ETAPAS */
+        .methodology-container { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
+        .methodology-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        
         .step-card { 
-            background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #1a1a1a;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #1a1a1a;
+            transition: 0.3s ease; position: relative;
         }
-        .step-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(130, 87, 229, 0.2); }
-        .step-num { color: var(--accent); font-weight: 600; font-size: 0.7rem; letter-spacing: 2px; }
-        
-        /* BOTÕES SEGMENTADOS */
-        .cta-box { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 320px; margin-top: 30px; }
-        .btn { padding: 18px; border-radius: 15px; border: none; font-weight: 600; text-decoration: none; text-align: center; transition: 0.3s; }
-        .btn-main { background: var(--primary); color: white; }
-        .btn-sec { background: rgba(255,255,255,0.05); color: white; border: 1px solid #333; }
-        
-        .section-title { text-align: center; margin-top: 80px; font-size: 1.5rem; letter-spacing: 2px; color: var(--primary); }
+        .step-card:hover { border-color: var(--accent); transform: scale(1.03); box-shadow: 0 5px 20px rgba(0, 242, 254, 0.1); }
+        .step-num { color: var(--primary); font-weight: 600; font-size: 0.7rem; display: block; margin-bottom: 5px; }
+        .step-card h4 { margin: 0; font-size: 0.9rem; letter-spacing: 0.5px; }
+
+        .btn-main { margin-top: 30px; padding: 18px 40px; border-radius: 15px; background: var(--primary); color: white; text-decoration: none; font-weight: 600; transition: 0.3s; box-shadow: 0 10px 20px rgba(130, 87, 229, 0.3); }
+        .btn-main:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
     <section class="hero">
         <h1 class="logo">PKACCI</h1>
-        <p style="opacity: 0.5;">Engenharia de Sistemas & Arquitetura de Escala</p>
-        <div class="cta-box">
-            <a href="https://wa.me/SEUNUMERO?text=Olá%20Paulo,%20gostaria%20de%20uma%20Consultoria%20de%20Arquitetura." class="btn btn-main">Contratar Consultoria</a>
-            <a href="https://wa.me/SEUNUMERO?text=Olá%20Paulo,%20quero%20iniciar%20um%20novo%20Projeto%20SaaS." class="btn btn-sec">Iniciar Projeto SaaS</a>
-        </div>
+        <p style="opacity: 0.5; max-width: 300px;">Engenharia Digital Blindada através de 15 etapas de rigor técnico.</p>
+        <a href="https://wa.me/SEUNUMERO?text=Olá,%20quero%20um%20projeto%20com%20a%20metodologia%20PKACCI." class="btn-main">Iniciar Consultoria</a>
     </section>
 
-    <h2 class="section-title">O FLUXO DE 15 ETAPAS</h2>
-    
-    <div class="methodology-grid">
-        <div class="step-card">
-            <span class="step-num">01-05 | HUMANA</span>
-            <h3>Alinhamento & UX</h3>
-            <p style="font-size: 0.85rem; opacity: 0.7;">Problema, Contexto, Hipótese, Requisitos e Design de Experiência (UX/UI).</p>
-        </div>
-
-        <div class="step-card">
-            <span class="step-num">06-10 | ENGENHEIRO</span>
-            <h3>Lógica & Blindagem</h3>
-            <p style="font-size: 0.85rem; opacity: 0.7;">Arquitetura, Decisão Técnica, Dados, Código Comentado e Testes de Stress.</p>
-        </div>
-
-        <div class="step-card">
-            <span class="step-num">11-15 | ARQUITETO</span>
-            <h3>Escala & Governança</h3>
-            <p style="font-size: 0.85rem; opacity: 0.7;">Monitoramento, Escalabilidade, Governança, Segurança e Inovação Preditiva.</p>
+    <div class="methodology-container">
+        <h2 style="text-align: center; color: var(--accent); margin-bottom: 40px; letter-spacing: 2px;">AS 15 ETAPAS</h2>
+        <div class="methodology-grid">
+            <div class="step-card"><span class="step-num">01</span><h4>Problema</h4></div>
+            <div class="step-card"><span class="step-num">02</span><h4>Contexto</h4></div>
+            <div class="step-card"><span class="step-num">03</span><h4>Hipótese</h4></div>
+            <div class="step-card"><span class="step-num">04</span><h4>Requisitos</h4></div>
+            <div class="step-card"><span class="step-num">05</span><h4>UX/UI</h4></div>
+            <div class="step-card"><span class="step-num">06</span><h4>Arquitetura</h4></div>
+            <div class="step-card"><span class="step-num">07</span><h4>Decisão Técnica</h4></div>
+            <div class="step-card"><span class="step-num">08</span><h4>Projeto de Dados</h4></div>
+            <div class="step-card"><span class="step-num">09</span><h4>Código</h4></div>
+            <div class="step-card"><span class="step-num">10</span><h4>Testes</h4></div>
+            <div class="step-card"><span class="step-num">11</span><h4>Monitoramento</h4></div>
+            <div class="step-card"><span class="step-num">12</span><h4>Escalabilidade</h4></div>
+            <div class="step-card"><span class="step-num">13</span><h4>Governança</h4></div>
+            <div class="step-card"><span class="step-num">14</span><h4>Segurança</h4></div>
+            <div class="step-card"><span class="step-num">15</span><h4>Inovação</h4></div>
         </div>
     </div>
 
-    <footer style="padding: 60px; text-align: center; opacity: 0.3; font-size: 0.8rem;">
+    <footer style="padding: 40px; text-align: center; opacity: 0.3; font-size: 0.7rem;">
         Developed by: Paulo Pkacci by 2026. <br>
         1. Humana | 2. Engenheiro | 3. Arquiteto
     </footer>

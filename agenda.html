@@ -3,113 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Barber Ultra | PKACCI</title>
+    <title>Barber Intelligence | PKACCI</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root { 
-            --bg: #0f111a; 
-            --card-bg: #1a1d2e; 
-            --primary: #8257e5; 
-            --accent: #00f2fe;
-            --text: #ffffff;
-            --success: #00ff88;
+            --bg: #0f111a; --card-bg: #1a1d2e; --primary: #8257e5; 
+            --accent: #00f2fe; --text: #ffffff; --success: #00ff88;
         }
 
         body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Poppins', sans-serif; 
-            margin: 0; padding-bottom: 100px;
-            overflow-x: hidden;
+            background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; 
+            margin: 0; padding-bottom: 100px; overflow-x: hidden;
         }
 
-        /* Glassmorphism Header */
+        /* Glass Header */
         .header { 
-            padding: 30px 20px; 
-            background: rgba(26, 29, 46, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 20px; background: rgba(26, 29, 46, 0.9);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);
             position: sticky; top: 0; z-index: 50;
         }
 
+        /* Dashboard Financeiro */
         .balance-card { 
             background: linear-gradient(135deg, #8257e5 0%, #2e1a47 100%);
-            padding: 25px; border-radius: 20px; margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(130, 87, 229, 0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; border-radius: 20px; margin-top: 10px;
+            box-shadow: 0 10px 25px rgba(130, 87, 229, 0.3);
         }
 
-        /* Lista Estilizada */
-        .list-container { padding: 10px 20px; }
+        /* GRÁFICO CSS PURO */
+        .chart-container {
+            background: var(--card-bg); margin: 20px; padding: 20px;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .chart-title { font-size: 0.8rem; opacity: 0.6; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .bars-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 100px; gap: 10px; }
+        .bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .bar { width: 100%; background: rgba(130, 87, 229, 0.3); border-radius: 6px 6px 2px 2px; transition: height 0.5s ease; position: relative; }
+        .bar.active { background: linear-gradient(to top, var(--primary), var(--accent)); box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
+        .bar-label { font-size: 0.6rem; margin-top: 8px; opacity: 0.5; }
+
+        /* Lista */
+        .list-container { padding: 0 20px; }
         .appointment-card {
-            background: var(--card-bg); 
-            margin-bottom: 15px; padding: 20px; border-radius: 18px;
-            display: flex; align-items: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s;
+            background: var(--card-bg); margin-bottom: 12px; padding: 15px; border-radius: 18px;
+            display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05);
             animation: fadeIn 0.4s ease-out;
         }
-        .appointment-card:active { transform: scale(0.98); }
+        .time-badge { background: rgba(130, 87, 229, 0.15); color: var(--primary); padding: 8px 12px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; }
+        .client-info { flex-grow: 1; margin-left: 15px; }
+        .client-info h3 { margin: 0; font-size: 0.9rem; }
+        .client-info span { color: var(--success); font-size: 0.8rem; font-weight: 600; }
 
-        .time-badge {
-            background: rgba(130, 87, 229, 0.2);
-            color: var(--primary);
-            padding: 10px 15px; border-radius: 12px;
-            font-weight: 600; font-size: 0.9rem;
-            border: 1px solid rgba(130, 87, 229, 0.3);
-        }
-
-        .client-info { flex-grow: 1; margin-left: 20px; }
-        .client-info h3 { margin: 0; font-size: 1rem; letter-spacing: 0.5px; }
-        .client-info span { color: var(--success); font-size: 0.85rem; font-weight: 600; }
-
-        /* Botões Estilizados */
-        .btn-zap { 
-            background: #25d366; color: white; border: none; 
-            padding: 10px 20px; border-radius: 12px; 
-            font-weight: 600; font-size: 0.75rem; 
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-            text-transform: uppercase;
-        }
-
-        .btn-del { 
-            color: #ff4b4b; background: rgba(255, 75, 75, 0.1);
-            border: none; width: 40px; height: 40px; border-radius: 10px;
-            margin-left: 10px; font-size: 1.2rem;
-        }
+        .btn-zap { background: #25d366; color: white; border: none; padding: 8px 15px; border-radius: 10px; font-weight: 600; font-size: 0.7rem; cursor: pointer; }
+        .btn-del { color: #ff4b4b; background: none; border: none; font-size: 1.2rem; margin-left: 10px; cursor: pointer; }
 
         .fab { 
             position: fixed; bottom: 30px; right: 25px; 
             background: linear-gradient(45deg, var(--primary), var(--accent));
-            width: 65px; height: 65px; border-radius: 22px; 
+            width: 60px; height: 60px; border-radius: 20px; 
             display: flex; align-items: center; justify-content: center; 
-            color: #fff; font-size: 2rem; border: none;
-            box-shadow: 0 10px 25px rgba(130, 87, 229, 0.5); z-index: 100;
+            color: #fff; font-size: 1.8rem; border: none; box-shadow: 0 10px 20px rgba(0,0,0,0.4); z-index: 100;
         }
 
-        /* Modal Ultra */
-        .modal { 
-            display: none; position: fixed; inset: 0; 
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            z-index: 200; align-items: center; justify-content: center;
-        }
-        .modal-content { 
-            background: var(--card-bg); width: 90%; max-width: 400px;
-            padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.1);
-        }
-        input { 
-            width: 100%; padding: 15px; margin: 15px 0; 
-            background: #0f111a; border: 1px solid #333; 
-            color: white; border-radius: 12px; box-sizing: border-box;
-            font-family: inherit;
-        }
-        .btn-confirm { 
-            width: 100%; background: var(--primary); padding: 18px; 
-            border: none; border-radius: 15px; color: white;
-            font-weight: 600; font-size: 1rem; margin-top: 10px;
-        }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 200; align-items: center; justify-content: center; }
+        .modal-content { background: var(--card-bg); width: 85%; padding: 25px; border-radius: 25px; }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #0f111a; border: 1px solid #333; color: white; border-radius: 12px; box-sizing: border-box; }
+        .btn-confirm { width: 100%; background: var(--primary); padding: 15px; border: none; border-radius: 12px; color: white; font-weight: 600; margin-top: 10px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -117,15 +77,23 @@
 <body>
 
     <header class="header">
-        <h2 style="margin:0; font-weight: 600; letter-spacing: -1px;">Barber Ultra</h2>
+        <h2 style="margin:0; font-size: 1.2rem;">Barber Intel</h2>
         <div class="balance-card">
-            <div>
-                <small style="opacity: 0.7;">Faturamento Estimado</small>
-                <div id="total" style="font-size: 2rem; font-weight: 600;">R$ 0,00</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">📊</div>
+            <small style="opacity: 0.7;">Faturamento de Hoje</small>
+            <div id="total" style="font-size: 1.8rem; font-weight: 600;">R$ 0,00</div>
         </div>
     </header>
+
+    <div class="chart-container">
+        <div class="chart-title">Desempenho Semanal</div>
+        <div class="bars-wrapper">
+            <div class="bar-group"><div class="bar" style="height: 40%;"></div><span class="bar-label">SEG</span></div>
+            <div class="bar-group"><div class="bar" style="height: 70%;"></div><span class="bar-label">TER</span></div>
+            <div class="bar-group"><div class="bar" style="height: 55%;"></div><span class="bar-label">QUA</span></div>
+            <div class="bar-group"><div class="bar" style="height: 85%;"></div><span class="bar-label">QUI</span></div>
+            <div class="bar-group"><div class="bar active" id="todayBar" style="height: 10%;"></div><span class="bar-label" style="color:var(--accent)">HOJE</span></div>
+        </div>
+    </div>
 
     <div class="list-container" id="list"></div>
 
@@ -133,11 +101,11 @@
 
     <div id="modal" class="modal">
         <div class="modal-content">
-            <h3 style="margin:0; font-size: 1.5rem;">Novo Corte</h3>
-            <input type="text" id="name" placeholder="Nome do Cliente">
+            <h3 style="margin:0;">Novo Cliente</h3>
+            <input type="text" id="name" placeholder="Nome">
             <input type="time" id="time">
-            <button class="btn-confirm" onclick="add()">Agendar Agora</button>
-            <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:#888; width:100%; margin-top:20px; font-family: inherit;">Cancelar</button>
+            <button class="btn-confirm" onclick="add()">Agendar</button>
+            <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:#888; width:100%; margin-top:15px;">Cancelar</button>
         </div>
     </div>
 
@@ -147,30 +115,30 @@
             const t = document.getElementById('time').value;
             if(!n || !t) return;
             const item = { id: Date.now(), name: n, time: t, price: 25 };
-            let data = JSON.parse(localStorage.getItem('barber_v4')) || [];
+            let data = JSON.parse(localStorage.getItem('barber_v5')) || [];
             data.push(item);
-            localStorage.setItem('barber_v4', JSON.stringify(data));
+            localStorage.setItem('barber_v5', JSON.stringify(data));
             document.getElementById('modal').style.display='none';
             render();
         }
 
         function del(id) {
-            let data = JSON.parse(localStorage.getItem('barber_v4')) || [];
+            let data = JSON.parse(localStorage.getItem('barber_v5')) || [];
             data = data.filter(i => i.id !== id);
-            localStorage.setItem('barber_v4', JSON.stringify(data));
+            localStorage.setItem('barber_v5', JSON.stringify(data));
             render();
         }
 
         function zap(name, time) {
-            const msg = `Olá ${name}, confirmando seu horário às ${time}. Tudo certo? ✂️`;
+            const msg = `Olá ${name}, confirmando seu horário às ${time}. ✂️`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function render() {
             const list = document.getElementById('list');
-            const data = JSON.parse(localStorage.getItem('barber_v4')) || [];
+            const data = JSON.parse(localStorage.getItem('barber_v5')) || [];
             let total = 0;
-            list.innerHTML = data.length ? "" : '<p style="text-align:center; opacity:0.4; margin-top:50px;">Nenhum agendamento para hoje.</p>';
+            list.innerHTML = data.length ? "" : '<p style="text-align:center; opacity:0.3; margin-top:20px; font-size:0.8rem;">Nenhum agendamento.</p>';
 
             data.sort((a,b) => a.time.localeCompare(b.time)).forEach(item => {
                 total += item.price;
@@ -187,6 +155,10 @@
                 `;
             });
             document.getElementById('total').innerText = `R$ ${total},00`;
+            
+            // Atualiza a altura da barra "HOJE" dinamicamente (Max R$ 500 para 100% de altura)
+            const height = Math.min((total / 500) * 100, 100);
+            document.getElementById('todayBar').style.height = (height + 10) + '%';
         }
         render();
     </script>

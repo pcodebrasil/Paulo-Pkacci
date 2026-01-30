@@ -2,133 +2,295 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda Fácil | Demo PKACCI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Barber Pro | SaaS Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root { --primary: #00f2fe; --bg: #050505; --card: #111; --danger: #ff4b4b; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; margin: 0; }
+        /* --- TEMA PREMIUM DARK --- */
+        :root { 
+            --bg: #121214; 
+            --surface: #202024; 
+            --primary: #8257e5; /* Roxo Tech */
+            --primary-light: #996dff;
+            --text: #e1e1e6; 
+            --text-muted: #a8a8b3;
+            --success: #04d361;
+            --danger: #e83f5b;
+        }
+
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; padding: 0; 
+            padding-bottom: 80px; /* Espaço para menu inferior */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- DASHBOARD HEADER --- */
+        .dashboard-header {
+            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+            padding: 25px 20px 10px;
+            border-bottom: 1px solid #333;
+        }
+        .welcome { font-size: 0.9rem; color: var(--text-muted); }
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary), #4f3299);
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(130, 87, 229, 0.3);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .balance-label { font-size: 0.8rem; opacity: 0.8; display: block; }
+        .balance-value { font-size: 1.8rem; font-weight: bold; display: block; }
+        .balance-icon { font-size: 1.5rem; opacity: 0.5; color: #fff; }
+
+        /* --- LISTA DE AGENDAMENTOS --- */
+        .section-title { padding: 20px 20px 10px; font-size: 1.1rem; color: var(--text); font-weight: 600; display: flex; justify-content: space-between; align-items: center;}
         
-        /* Header */
-        header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
-        h1 { margin: 0; font-size: 1.5rem; background: linear-gradient(to right, var(--primary), #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-back { color: #888; text-decoration: none; font-size: 0.9rem; border: 1px solid #333; padding: 5px 15px; border-radius: 20px; }
-
-        /* Formulario */
-        .input-group { margin-bottom: 15px; }
-        label { display: block; color: #888; font-size: 0.8rem; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 12px; background: #222; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        input:focus { border-color: var(--primary); outline: none; }
-
-        .btn-add { width: 100%; padding: 15px; background: var(--primary); color: #000; border: none; font-weight: bold; border-radius: 50px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+        .appointment-card {
+            background: var(--surface);
+            margin: 10px 20px;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s ease-out;
+        }
+        .time-box {
+            background: #29292e; padding: 10px; border-radius: 8px; text-align: center; min-width: 50px; margin-right: 15px;
+        }
+        .time-box span { display: block; font-weight: bold; color: var(--text); }
+        .time-box small { font-size: 0.7rem; color: var(--text-muted); }
         
-        /* Lista */
-        .agenda-list { margin-top: 40px; }
-        h2 { font-size: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .appointment { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--primary); animation: fadeIn 0.5s; }
-        .info h3 { margin: 0 0 5px 0; font-size: 1rem; }
-        .info p { margin: 0; color: #888; font-size: 0.8rem; }
-        .btn-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; }
+        .client-info h3 { margin: 0; font-size: 1rem; }
+        .client-info p { margin: 4px 0 0; font-size: 0.8rem; color: var(--text-muted); }
+        .price-tag { margin-left: auto; font-weight: bold; color: var(--success); font-size: 0.9rem; }
+        
+        .btn-delete { background: none; border: none; color: var(--danger); margin-left: 15px; cursor: pointer; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- FAB (Floating Action Button) --- */
+        .fab {
+            position: fixed; bottom: 90px; right: 20px;
+            background: var(--primary); width: 56px; height: 56px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 100;
+            color: #fff; font-size: 1.5rem; border: none;
+        }
+
+        /* --- MODAL DE NOVO AGENDAMENTO --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 200; align-items: end;
+        }
+        .modal-content {
+            background: var(--surface); width: 100%; padding: 25px; border-radius: 20px 20px 0 0;
+            box-sizing: border-box; animation: slideUp 0.3s;
+        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 0.9rem; }
+        input { 
+            width: 100%; padding: 15px; background: var(--bg); border: 1px solid #333; 
+            color: white; border-radius: 10px; box-sizing: border-box; font-size: 1rem; outline: none;
+        }
+        input:focus { border-color: var(--primary); }
+
+        /* Seleção de Serviços (Chips) */
+        .chips-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .chip {
+            background: var(--bg); border: 1px solid #333; padding: 10px 20px; border-radius: 50px;
+            color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .btn-confirm {
+            width: 100%; background: var(--success); color: #000; padding: 18px;
+            border: none; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer;
+        }
+
+        /* --- BOTTOM NAVIGATION --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background: var(--surface);
+            display: flex; justify-content: space-around; padding: 15px 0;
+            border-top: 1px solid #333; z-index: 90;
+        }
+        .nav-item { color: var(--text-muted); text-decoration: none; font-size: 1.5rem; position: relative; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active::after {
+            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 5px; background: var(--primary); border-radius: 50%;
+        }
+
+        /* Animações */
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="btn-back">← Voltar</a>
-        <h1>Agenda Fácil <span style="font-size:0.6rem; color:#555;">v0.1</span></h1>
+    <header class="dashboard-header">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <span class="welcome">Bem-vindo,</span>
+                <h2 style="margin:0;">Barber Shop Elite</h2>
+            </div>
+            <a href="index.html" style="color:white; text-decoration:none;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </div>
+
+        <div class="balance-card">
+            <div>
+                <span class="balance-label">Faturamento Hoje</span>
+                <span class="balance-value" id="dailyTotal">R$ 0,00</span>
+            </div>
+            <i class="fas fa-wallet balance-icon"></i>
+        </div>
     </header>
 
-    <div class="form-container">
-        <div class="input-group">
-            <label>Cliente</label>
-            <input type="text" id="clientName" placeholder="Ex: João Silva">
-        </div>
-        <div class="input-group">
-            <label>Serviço</label>
-            <select id="serviceType">
-                <option value="Consultoria">Consultoria Técnica</option>
-                <option value="Mentoria">Mentoria Developer</option>
-                <option value="Corte">Corte de Cabelo (Demo)</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label>Horário</label>
-            <input type="datetime-local" id="appTime">
-        </div>
-        <button onclick="addAppointment()" class="btn-add">AGENDAR HORÁRIO</button>
+    <div class="section-title">
+        <span>Agenda de Hoje</span>
+        <small style="color:var(--text-muted)" id="dateDisplay">--/--</small>
     </div>
 
-    <div class="agenda-list">
-        <h2>Próximos Agendamentos</h2>
-        <div id="listContainer">
-            <p style="color:#444; text-align:center; margin-top:20px;" id="emptyMsg">Nenhum horário agendado.</p>
+    <div id="appointmentsList" style="padding-bottom: 20px;">
+        <p style="text-align:center; color:#444; margin-top:30px;">Nenhum cliente agendado.</p>
+    </div>
+
+    <button class="fab" onclick="openModal()">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active"><i class="fas fa-home"></i></a>
+        <a href="#" class="nav-item"><i class="fas fa-calendar-alt"></i></a>
+        <a href="#" class="nav-item"><i class="fas fa-user"></i></a>
+    </nav>
+
+    <div id="modalApp" class="modal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content">
+            <h3 style="margin-top:0;">Novo Cliente</h3>
+            
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" id="clientName" placeholder="Ex: Ricardo Silva">
+            </div>
+
+            <div class="form-group">
+                <label>Serviço</label>
+                <div class="chips-container">
+                    <div class="chip active" onclick="selectService(this, 35)">Cabelo (R$35)</div>
+                    <div class="chip" onclick="selectService(this, 25)">Barba (R$25)</div>
+                    <div class="chip" onclick="selectService(this, 50)">Completo (R$50)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Horário</label>
+                <input type="time" id="appTime">
+            </div>
+
+            <button class="btn-confirm" onclick="saveAppointment()">CONFIRMAR AGENDAMENTO</button>
         </div>
     </div>
 
     <script>
-        // Lógica do Sistema (Carrega ao abrir)
-        document.addEventListener('DOMContentLoaded', loadAppointments);
+        // --- LÓGICA DO APP ---
+        let selectedPrice = 35;
+        let selectedService = "Cabelo";
 
-        function addAppointment() {
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAppointments();
+            updateDate();
+        });
+
+        function updateDate() {
+            const now = new Date();
+            document.getElementById('dateDisplay').innerText = now.toLocaleDateString('pt-BR');
+        }
+
+        // Modal Functions
+        function openModal() { document.getElementById('modalApp').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modalApp').style.display = 'none'; }
+
+        // Seleção de Serviço Visual
+        function selectService(element, price) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            selectedPrice = price;
+            selectedService = element.innerText.split(' (')[0];
+        }
+
+        // Salvar e Carregar
+        function saveAppointment() {
             const name = document.getElementById('clientName').value;
-            const service = document.getElementById('serviceType').value;
             const time = document.getElementById('appTime').value;
 
-            if(!name || !time) return alert("Preencha todos os campos!");
+            if(!name || !time) return alert("Preencha o nome e horário!");
 
-            const appointment = { id: Date.now(), name, service, time };
-            
-            // Salvar no Navegador
-            let appointments = JSON.parse(localStorage.getItem('pkacci_agenda')) || [];
-            appointments.push(appointment);
-            appointments.sort((a,b) => new Date(a.time) - new Date(b.time)); // Ordenar por data
-            localStorage.setItem('pkacci_agenda', JSON.stringify(appointments));
+            const appointment = {
+                id: Date.now(),
+                name,
+                service: selectedService,
+                price: selectedPrice,
+                time
+            };
 
-            renderList();
+            let apps = JSON.parse(localStorage.getItem('barber_data')) || [];
+            apps.push(appointment);
+            apps.sort((a,b) => a.time.localeCompare(b.time)); // Ordenar por horário
+            localStorage.setItem('barber_data', JSON.stringify(apps));
+
+            closeModal();
+            loadAppointments();
             
-            // Limpar campos
+            // Limpar form
             document.getElementById('clientName').value = '';
-            document.getElementById('appTime').value = '';
-            alert("Agendamento Confirmado!");
         }
 
         function deleteApp(id) {
-            if(!confirm("Cancelar este agendamento?")) return;
-            let appointments = JSON.parse(localStorage.getItem('pkacci_agenda')) || [];
-            appointments = appointments.filter(app => app.id !== id);
-            localStorage.setItem('pkacci_agenda', JSON.stringify(appointments));
-            renderList();
+            if(confirm("Finalizar ou cancelar este corte?")) {
+                let apps = JSON.parse(localStorage.getItem('barber_data')) || [];
+                apps = apps.filter(a => a.id !== id);
+                localStorage.setItem('barber_data', JSON.stringify(apps));
+                loadAppointments();
+            }
         }
 
-        function loadAppointments() { renderList(); }
+        function loadAppointments() {
+            const list = document.getElementById('appointmentsList');
+            const apps = JSON.parse(localStorage.getItem('barber_data')) || [];
+            let total = 0;
 
-        function renderList() {
-            const list = document.getElementById('listContainer');
-            const appointments = JSON.parse(localStorage.getItem('pkacci_agenda')) || [];
-            
-            if(appointments.length === 0) {
-                list.innerHTML = '<p style="color:#444; text-align:center; margin-top:20px;">Nenhum horário agendado.</p>';
+            if(apps.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#444; margin-top:30px;">Nenhum cliente na agenda hoje.</p>';
+                document.getElementById('dailyTotal').innerText = "R$ 0,00";
                 return;
             }
 
             list.innerHTML = '';
-            appointments.forEach(app => {
-                const dateObj = new Date(app.time);
-                const dateStr = dateObj.toLocaleDateString('pt-BR');
-                const timeStr = dateObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
-
+            apps.forEach(app => {
+                total += app.price;
                 const div = document.createElement('div');
-                div.className = 'appointment';
+                div.className = 'appointment-card';
                 div.innerHTML = `
-                    <div class="info">
-                        <h3>${app.name}</h3>
-                        <p>${app.service} • ${dateStr} às <strong>${timeStr}</strong></p>
+                    <div class="time-box">
+                        <span>${app.time}</span>
                     </div>
-                    <button onclick="deleteApp(${app.id})" class="btn-del">×</button>
+                    <div class="client-info">
+                        <h3>${app.name}</h3>
+                        <p>${app.service}</p>
+                    </div>
+                    <div class="price-tag">R$ ${app.price},00</div>
+                    <button onclick="deleteApp(${app.id})" class="btn-delete"><i class="fas fa-trash"></i></button>
                 `;
                 list.appendChild(div);
             });
+
+            // Animação do Total Financeiro
+            document.getElementById('dailyTotal').innerText = `R$ ${total},00`;
         }
     </script>
 </body>

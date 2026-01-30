@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Fácil | Demo PKACCI</title>
+    <style>
+        :root { --primary: #00f2fe; --bg: #050505; --card: #111; --danger: #ff4b4b; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; margin: 0; }
+        
+        /* Header */
+        header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+        h1 { margin: 0; font-size: 1.5rem; background: linear-gradient(to right, var(--primary), #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-back { color: #888; text-decoration: none; font-size: 0.9rem; border: 1px solid #333; padding: 5px 15px; border-radius: 20px; }
+
+        /* Formulario */
+        .input-group { margin-bottom: 15px; }
+        label { display: block; color: #888; font-size: 0.8rem; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; background: #222; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        input:focus { border-color: var(--primary); outline: none; }
+
+        .btn-add { width: 100%; padding: 15px; background: var(--primary); color: #000; border: none; font-weight: bold; border-radius: 50px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+        
+        /* Lista */
+        .agenda-list { margin-top: 40px; }
+        h2 { font-size: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .appointment { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--primary); animation: fadeIn 0.5s; }
+        .info h3 { margin: 0 0 5px 0; font-size: 1rem; }
+        .info p { margin: 0; color: #888; font-size: 0.8rem; }
+        .btn-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-back">← Voltar</a>
+        <h1>Agenda Fácil <span style="font-size:0.6rem; color:#555;">v0.1</span></h1>
+    </header>
+
+    <div class="form-container">
+        <div class="input-group">
+            <label>Cliente</label>
+            <input type="text" id="clientName" placeholder="Ex: João Silva">
+        </div>
+        <div class="input-group">
+            <label>Serviço</label>
+            <select id="serviceType">
+                <option value="Consultoria">Consultoria Técnica</option>
+                <option value="Mentoria">Mentoria Developer</option>
+                <option value="Corte">Corte de Cabelo (Demo)</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Horário</label>
+            <input type="datetime-local" id="appTime">
+        </div>
+        <button onclick="addAppointment()" class="btn-add">AGENDAR HORÁRIO</button>
+    </div>
+
+    <div class="agenda-list">
+        <h2>Próximos Agendamentos</h2>
+        <div id="listContainer">
+            <p style="color:#444; text-align:center; margin-top:20px;" id="emptyMsg">Nenhum horário agendado.</p>
+        </div>
+    </div>
+
+    <script>
+        // Lógica do Sistema (Carrega ao abrir)
+        document.addEventListener('DOMContentLoaded', loadAppointments);
+
+        function addAppointment() {
+            const name = document.getElementById('clientName').value;
+            const service = document.getElementById('serviceType').value;
+            const time = document.getElementById('appTime').value;
+
+            if(!name || !time) return alert("Preencha todos os campos!");
+
+            const appointment = { id: Date.now(), name, service, time };
+            
+            // Salvar no Navegador
+            let appointments = JSON.parse(localStorage.getItem('pkacci_agenda')) || [];
+            appointments.push(appointment);
+            appointments.sort((a,b) => new Date(a.time) - new Date(b.time)); // Ordenar por data
+            localStorage.setItem('pkacci_agenda', JSON.stringify(appointments));
+
+            renderList();
+            
+            // Limpar campos
+            document.getElementById('clientName').value = '';
+            document.getElementById('appTime').value = '';
+            alert("Agendamento Confirmado!");
+        }
+
+        function deleteApp(id) {
+            if(!confirm("Cancelar este agendamento?")) return;
+            let appointments = JSON.parse(localStorage.getItem('pkacci_agenda')) || [];
+            appointments = appointments.filter(app => app.id !== id);
+            localStorage.setItem('pkacci_agenda', JSON.stringify(appointments));
+            renderList();
+        }
+
+        function loadAppointments() { renderList(); }
+
+        function renderList() {
+            const list = document.getElementById('listContainer');
+            const appointments = JSON.parse(localStorage.getItem('pkacci_agenda')) || [];
+            
+            if(appointments.length === 0) {
+                list.innerHTML = '<p style="color:#444; text-align:center; margin-top:20px;">Nenhum horário agendado.</p>';
+                return;
+            }
+
+            list.innerHTML = '';
+            appointments.forEach(app => {
+                const dateObj = new Date(app.time);
+                const dateStr = dateObj.toLocaleDateString('pt-BR');
+                const timeStr = dateObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+
+                const div = document.createElement('div');
+                div.className = 'appointment';
+                div.innerHTML = `
+                    <div class="info">
+                        <h3>${app.name}</h3>
+                        <p>${app.service} • ${dateStr} às <strong>${timeStr}</strong></p>
+                    </div>
+                    <button onclick="deleteApp(${app.id})" class="btn-del">×</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>

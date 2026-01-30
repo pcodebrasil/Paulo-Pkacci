@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Barber Pro | SaaS Demo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>Barber Pro | PKACCI</title>
     <style>
         :root { --bg: #121214; --surface: #202024; --primary: #8257e5; --text: #e1e1e6; --success: #04d361; --danger: #e83f5b; }
         body { background-color: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding-bottom: 80px; }
+        
+        /* Header & Cards */
         .header { padding: 20px; background: var(--surface); border-bottom: 1px solid #333; }
         .balance-card { background: linear-gradient(135deg, var(--primary), #4f3299); padding: 20px; border-radius: 15px; margin-top: 10px; }
         
@@ -19,12 +19,12 @@
         .client-info { flex-grow: 1; margin-left: 10px; }
         .client-info h3 { margin: 0; font-size: 0.9rem; }
         
-        /* ESTILO DOS BOTÕES */
-        .actions { display: flex; gap: 15px; align-items: center; }
-        .btn-zap { color: #25d366; font-size: 1.4rem; cursor: pointer; border: none; background: none; padding: 5px; }
-        .btn-del { color: var(--danger); font-size: 1.1rem; cursor: pointer; border: none; background: none; padding: 5px; }
+        /* BOTÕES VISÍVEIS */
+        .actions { display: flex; gap: 12px; align-items: center; }
+        .btn-zap { background: #25d366; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
+        .btn-del { background: none; border: none; color: var(--danger); font-size: 1.2rem; cursor: pointer; }
 
-        .fab { position: fixed; bottom: 30px; right: 20px; background: var(--primary); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 100; }
+        .fab { position: fixed; bottom: 30px; right: 20px; background: var(--primary); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; border: none; font-size: 2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 100; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 200; align-items: center; justify-content: center; }
         .modal-content { background: var(--surface); width: 85%; padding: 20px; border-radius: 15px; }
@@ -44,17 +44,15 @@
 
     <div id="list" style="margin-top: 10px;"></div>
 
-    <button class="fab" onclick="document.getElementById('modal').style.display='flex'">
-        <i class="fas fa-plus"></i>
-    </button>
+    <button class="fab" onclick="document.getElementById('modal').style.display='flex'">+</button>
 
     <div id="modal" class="modal">
         <div class="modal-content">
-            <h3 style="margin:0">Novo Cliente</h3>
-            <input type="text" id="name" placeholder="Nome">
+            <h3 style="margin:0">Novo Agendamento</h3>
+            <input type="text" id="name" placeholder="Nome do Cliente">
             <input type="time" id="time">
             <button class="btn-confirm" onclick="add()">CONFIRMAR</button>
-            <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:#888; width:100%; margin-top:15px;">Fechar</button>
+            <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:#888; width:100%; margin-top:15px;">Cancelar</button>
         </div>
     </div>
 
@@ -62,21 +60,23 @@
         function add() {
             const n = document.getElementById('name').value;
             const t = document.getElementById('time').value;
-            if(!n || !t) return alert("Preencha tudo");
+            if(!n || !t) return alert("Preencha nome e horário");
 
             const item = { id: Date.now(), name: n, time: t, price: 25 };
-            let data = JSON.parse(localStorage.getItem('barber_v2')) || [];
+            let data = JSON.parse(localStorage.getItem('barber_v3')) || [];
             data.push(item);
-            localStorage.setItem('barber_v2', JSON.stringify(data));
+            localStorage.setItem('barber_v3', JSON.stringify(data));
             document.getElementById('modal').style.display='none';
             render();
         }
 
         function del(id) {
-            let data = JSON.parse(localStorage.getItem('barber_v2')) || [];
-            data = data.filter(i => i.id !== id);
-            localStorage.setItem('barber_v2', JSON.stringify(data));
-            render();
+            if(confirm("Remover agendamento?")) {
+                let data = JSON.parse(localStorage.getItem('barber_v3')) || [];
+                data = data.filter(i => i.id !== id);
+                localStorage.setItem('barber_v3', JSON.stringify(data));
+                render();
+            }
         }
 
         function zap(name, time) {
@@ -86,7 +86,7 @@
 
         function render() {
             const list = document.getElementById('list');
-            const data = JSON.parse(localStorage.getItem('barber_v2')) || [];
+            const data = JSON.parse(localStorage.getItem('barber_v3')) || [];
             let total = 0;
             list.innerHTML = "";
 
@@ -100,12 +100,8 @@
                             <small style="color:#04d361">R$ ${item.price},00</small>
                         </div>
                         <div class="actions">
-                            <button class="btn-zap" onclick="zap('${item.name}', '${item.time}')">
-                                <i class="fab fa-whatsapp"></i>
-                            </button>
-                            <button class="btn-del" onclick="del(${item.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <button class="btn-zap" onclick="zap('${item.name}', '${item.time}')">ZAP</button>
+                            <button class="btn-del" onclick="del(${item.id})">🗑</button>
                         </div>
                     </div>
                 `;

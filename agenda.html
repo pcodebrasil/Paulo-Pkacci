@@ -7,286 +7,112 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- TEMA PREMIUM DARK --- */
-        :root { 
-            --bg: #121214; 
-            --surface: #202024; 
-            --primary: #8257e5; 
-            --primary-light: #996dff;
-            --text: #e1e1e6; 
-            --text-muted: #a8a8b3;
-            --success: #04d361;
-            --danger: #e83f5b;
-            --whatsapp: #25d366;
-        }
-
-        body { 
-            background-color: var(--bg); 
-            color: var(--text); 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; padding: 0; 
-            padding-bottom: 80px; 
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* --- HEADER FINANCEIRO --- */
-        .dashboard-header {
-            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
-            padding: 25px 20px 10px;
-            border-bottom: 1px solid #333;
-        }
-        .welcome { font-size: 0.9rem; color: var(--text-muted); }
-        .balance-card {
-            background: linear-gradient(135deg, var(--primary), #4f3299);
-            padding: 20px;
-            border-radius: 16px;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(130, 87, 229, 0.3);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .balance-label { font-size: 0.8rem; opacity: 0.8; display: block; }
-        .balance-value { font-size: 1.8rem; font-weight: bold; display: block; }
-        .balance-icon { font-size: 1.5rem; opacity: 0.5; color: #fff; }
-
-        /* --- LISTA DE AGENDAMENTOS --- */
-        .section-title { padding: 20px 20px 10px; font-size: 1.1rem; color: var(--text); font-weight: 600; display: flex; justify-content: space-between; align-items: center;}
+        :root { --bg: #121214; --surface: #202024; --primary: #8257e5; --text: #e1e1e6; --success: #04d361; --danger: #e83f5b; }
+        body { background-color: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding-bottom: 80px; }
+        .header { padding: 20px; background: var(--surface); border-bottom: 1px solid #333; }
+        .balance-card { background: linear-gradient(135deg, var(--primary), #4f3299); padding: 20px; border-radius: 15px; margin-top: 10px; }
         
         .appointment-card {
-            background: var(--surface);
-            margin: 10px 20px;
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            border-left: 4px solid var(--primary);
-            animation: slideIn 0.3s ease-out;
-            position: relative;
+            background: var(--surface); margin: 10px 20px; padding: 15px; border-radius: 12px;
+            display: flex; align-items: center; border-left: 4px solid var(--primary);
         }
-        .time-box {
-            background: #29292e; padding: 10px; border-radius: 8px; text-align: center; min-width: 50px; margin-right: 15px;
-        }
-        .time-box span { display: block; font-weight: bold; color: var(--text); }
+        .client-info { flex-grow: 1; margin-left: 10px; }
+        .client-info h3 { margin: 0; font-size: 0.9rem; }
         
-        .client-info { flex-grow: 1; }
-        .client-info h3 { margin: 0; font-size: 1rem; }
-        .client-info p { margin: 4px 0 0; font-size: 0.8rem; color: var(--text-muted); }
+        /* ESTILO DOS BOTÕES */
+        .actions { display: flex; gap: 15px; align-items: center; }
+        .btn-zap { color: #25d366; font-size: 1.4rem; cursor: pointer; border: none; background: none; padding: 5px; }
+        .btn-del { color: var(--danger); font-size: 1.1rem; cursor: pointer; border: none; background: none; padding: 5px; }
+
+        .fab { position: fixed; bottom: 30px; right: 20px; background: var(--primary); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 100; }
         
-        .actions { display: flex; align-items: center; gap: 15px; }
-        .price-tag { font-weight: bold; color: var(--success); font-size: 0.9rem; margin-right: 10px; }
-        
-        /* Botões de Ação */
-        .btn-icon { background: none; border: none; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
-        .btn-zap { color: var(--whatsapp); }
-        .btn-zap:hover { transform: scale(1.2); }
-        .btn-del { color: var(--danger); }
-
-        /* --- FAB (Floating Action Button) --- */
-        .fab {
-            position: fixed; bottom: 90px; right: 20px;
-            background: var(--primary); width: 56px; height: 56px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 100;
-            color: #fff; font-size: 1.5rem; border: none;
-        }
-
-        /* --- MODAL --- */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 200; align-items: end;
-        }
-        .modal-content {
-            background: var(--surface); width: 100%; padding: 25px; border-radius: 20px 20px 0 0;
-            box-sizing: border-box; animation: slideUp 0.3s;
-        }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 0.9rem; }
-        input { 
-            width: 100%; padding: 15px; background: var(--bg); border: 1px solid #333; 
-            color: white; border-radius: 10px; box-sizing: border-box; font-size: 1rem; outline: none;
-        }
-        input:focus { border-color: var(--primary); }
-
-        .chips-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
-        .chip {
-            background: var(--bg); border: 1px solid #333; padding: 10px 20px; border-radius: 50px;
-            color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: 0.2s;
-        }
-        .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
-        .btn-confirm {
-            width: 100%; background: var(--success); color: #000; padding: 18px;
-            border: none; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer;
-        }
-
-        /* --- NAV --- */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background: var(--surface);
-            display: flex; justify-content: space-around; padding: 15px 0;
-            border-top: 1px solid #333; z-index: 90;
-        }
-        .nav-item { color: var(--text-muted); text-decoration: none; font-size: 1.5rem; position: relative; }
-        .nav-item.active { color: var(--primary); }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 200; align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface); width: 85%; padding: 20px; border-radius: 15px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #121214; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; }
+        .btn-confirm { width: 100%; background: var(--success); padding: 15px; border: none; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header class="dashboard-header">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div>
-                <span class="welcome">Bem-vindo,</span>
-                <h2 style="margin:0;">Barber Shop Elite</h2>
-            </div>
-            <a href="index.html" style="color:white; text-decoration:none;"><i class="fas fa-sign-out-alt"></i> Sair</a>
-        </div>
+    <header class="header">
+        <h2 style="margin:0;">Barber Shop Elite</h2>
         <div class="balance-card">
-            <div>
-                <span class="balance-label">Faturamento Hoje</span>
-                <span class="balance-value" id="dailyTotal">R$ 0,00</span>
-            </div>
-            <i class="fas fa-wallet balance-icon"></i>
+            <small>Faturamento Hoje</small>
+            <div id="total" style="font-size: 1.8rem; font-weight: bold;">R$ 0,00</div>
         </div>
     </header>
 
-    <div class="section-title">
-        <span>Agenda de Hoje</span>
-        <small style="color:var(--text-muted)" id="dateDisplay">--/--</small>
-    </div>
+    <div id="list" style="margin-top: 10px;"></div>
 
-    <div id="appointmentsList" style="padding-bottom: 20px;"></div>
+    <button class="fab" onclick="document.getElementById('modal').style.display='flex'">
+        <i class="fas fa-plus"></i>
+    </button>
 
-    <button class="fab" onclick="openModal()"><i class="fas fa-plus"></i></button>
-
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active"><i class="fas fa-home"></i></a>
-        <a href="#" class="nav-item"><i class="fas fa-calendar-alt"></i></a>
-        <a href="#" class="nav-item"><i class="fas fa-chart-line"></i></a>
-    </nav>
-
-    <div id="modalApp" class="modal" onclick="if(event.target === this) closeModal()">
+    <div id="modal" class="modal">
         <div class="modal-content">
-            <h3 style="margin-top:0;">Novo Cliente</h3>
-            <div class="form-group">
-                <label>Nome do Cliente</label>
-                <input type="text" id="clientName" placeholder="Ex: Ricardo Silva">
-            </div>
-            <div class="form-group">
-                <label>Serviço</label>
-                <div class="chips-container">
-                    <div class="chip active" onclick="selectService(this, 35)">Cabelo (R$35)</div>
-                    <div class="chip" onclick="selectService(this, 25)">Barba (R$25)</div>
-                    <div class="chip" onclick="selectService(this, 50)">Completo (R$50)</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Horário</label>
-                <input type="time" id="appTime">
-            </div>
-            <button class="btn-confirm" onclick="saveAppointment()">CONFIRMAR AGENDAMENTO</button>
+            <h3 style="margin:0">Novo Cliente</h3>
+            <input type="text" id="name" placeholder="Nome">
+            <input type="time" id="time">
+            <button class="btn-confirm" onclick="add()">CONFIRMAR</button>
+            <button onclick="document.getElementById('modal').style.display='none'" style="background:none; border:none; color:#888; width:100%; margin-top:15px;">Fechar</button>
         </div>
     </div>
 
     <script>
-        let selectedPrice = 35;
-        let selectedService = "Cabelo";
+        function add() {
+            const n = document.getElementById('name').value;
+            const t = document.getElementById('time').value;
+            if(!n || !t) return alert("Preencha tudo");
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAppointments();
-            const now = new Date();
-            const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            document.getElementById('dateDisplay').innerText = now.toLocaleDateString('pt-BR', options);
-        });
-
-        function openModal() { document.getElementById('modalApp').style.display = 'flex'; }
-        function closeModal() { document.getElementById('modalApp').style.display = 'none'; }
-
-        function selectService(element, price) {
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-            selectedPrice = price;
-            selectedService = element.innerText.split(' (')[0];
+            const item = { id: Date.now(), name: n, time: t, price: 25 };
+            let data = JSON.parse(localStorage.getItem('barber_v2')) || [];
+            data.push(item);
+            localStorage.setItem('barber_v2', JSON.stringify(data));
+            document.getElementById('modal').style.display='none';
+            render();
         }
 
-        function saveAppointment() {
-            const name = document.getElementById('clientName').value;
-            const time = document.getElementById('appTime').value;
-
-            if(!name || !time) return alert("Preencha nome e horário!");
-
-            const appointment = {
-                id: Date.now(),
-                name,
-                service: selectedService,
-                price: selectedPrice,
-                time
-            };
-
-            let apps = JSON.parse(localStorage.getItem('barber_data')) || [];
-            apps.push(appointment);
-            apps.sort((a,b) => a.time.localeCompare(b.time)); 
-            localStorage.setItem('barber_data', JSON.stringify(apps));
-
-            closeModal();
-            loadAppointments();
-            document.getElementById('clientName').value = '';
+        function del(id) {
+            let data = JSON.parse(localStorage.getItem('barber_v2')) || [];
+            data = data.filter(i => i.id !== id);
+            localStorage.setItem('barber_v2', JSON.stringify(data));
+            render();
         }
 
-        function deleteApp(id) {
-            if(confirm("Finalizar ou cancelar este corte?")) {
-                let apps = JSON.parse(localStorage.getItem('barber_data')) || [];
-                apps = apps.filter(a => a.id !== id);
-                localStorage.setItem('barber_data', JSON.stringify(apps));
-                loadAppointments();
-            }
-        }
-
-        // --- FUNÇÃO WHATSAPP (NOVA) ---
-        function sendZap(name, time, service) {
-            const msg = `Olá ${name}, confirmando seu horário de *${service}* hoje às *${time}*. Tudo certo? ✂️`;
-            // Abre o WhatsApp para escolher o contato (Genérico)
+        function zap(name, time) {
+            const msg = `Olá ${name}, confirmando seu horário às ${time}. Tudo certo?`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        function loadAppointments() {
-            const list = document.getElementById('appointmentsList');
-            const apps = JSON.parse(localStorage.getItem('barber_data')) || [];
+        function render() {
+            const list = document.getElementById('list');
+            const data = JSON.parse(localStorage.getItem('barber_v2')) || [];
             let total = 0;
+            list.innerHTML = "";
 
-            if(apps.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#444; margin-top:30px;">Nenhum cliente na agenda hoje.</p>';
-                document.getElementById('dailyTotal').innerText = "R$ 0,00";
-                return;
-            }
-
-            list.innerHTML = '';
-            apps.forEach(app => {
-                total += app.price;
-                const div = document.createElement('div');
-                div.className = 'appointment-card';
-                div.innerHTML = `
-                    <div class="time-box">
-                        <span>${app.time}</span>
-                    </div>
-                    <div class="client-info">
-                        <h3>${app.name}</h3>
-                        <p>${app.service}</p>
-                    </div>
-                    <div class="actions">
-                        <div class="price-tag">R$ ${app.price}</div>
-                        <button onclick="sendZap('${app.name}', '${app.time}', '${app.service}')" class="btn-icon btn-zap">
-                            <i class="fab fa-whatsapp"></i>
-                        </button>
-                        <button onclick="deleteApp(${app.id})" class="btn-icon btn-del">
-                            <i class="fas fa-trash"></i>
-                        </button>
+            data.forEach(item => {
+                total += item.price;
+                list.innerHTML += `
+                    <div class="appointment-card">
+                        <div style="font-weight:bold; background:#29292e; padding:8px; border-radius:5px;">${item.time}</div>
+                        <div class="client-info">
+                            <h3>${item.name}</h3>
+                            <small style="color:#04d361">R$ ${item.price},00</small>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-zap" onclick="zap('${item.name}', '${item.time}')">
+                                <i class="fab fa-whatsapp"></i>
+                            </button>
+                            <button class="btn-del" onclick="del(${item.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
-                list.appendChild(div);
             });
-            document.getElementById('dailyTotal').innerText = `R$ ${total},00`;
+            document.getElementById('total').innerText = `R$ ${total},00`;
         }
+        render();
     </script>
 </body>
 </html>
